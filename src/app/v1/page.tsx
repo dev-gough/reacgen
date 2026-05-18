@@ -156,10 +156,37 @@ function Cover() {
       </p>
 
       <div
+        className="mt-10 flex flex-wrap items-baseline gap-x-8 gap-y-3"
+        style={{ animation: "rg-fade-up 800ms ease-out 460ms both" }}
+      >
+        <TrackedLink
+          href="/v1/whitelist"
+          ctaId="hero-evaluation-v1"
+          location="hero"
+          className="inline-flex items-center gap-3 px-6 py-3 text-[11px] tracking-[0.24em] uppercase transition-opacity hover:opacity-80"
+          style={{
+            fontFamily: "var(--font-mono)",
+            background: INK,
+            color: PAPER,
+          }}
+        >
+          Request an evaluation
+          <span aria-hidden style={{ color: GREEN }}>→</span>
+        </TrackedLink>
+        <a
+          href="#fig-1"
+          className="text-[11px] tracking-[0.22em] uppercase transition-opacity hover:opacity-60"
+          style={{ fontFamily: "var(--font-mono)", color: INK }}
+        >
+          Read the field report
+        </a>
+      </div>
+
+      <div
         className="mt-14 flex flex-wrap items-baseline gap-x-10 gap-y-3 text-[12px] tracking-[0.16em] uppercase"
         style={{
           fontFamily: "var(--font-mono)",
-          animation: "rg-fade-up 800ms ease-out 520ms both",
+          animation: "rg-fade-up 800ms ease-out 600ms both",
         }}
       >
         <span>
@@ -252,7 +279,7 @@ function Lead() {
 
 function Figure() {
   return (
-    <section className="mx-auto max-w-[78rem] px-6 py-16 md:px-16 md:py-24">
+    <section id="fig-1" className="mx-auto max-w-[78rem] px-6 py-16 md:px-16 md:py-24">
       <div className="grid grid-cols-12 gap-x-10 gap-y-6">
         <div className="col-span-12 md:col-span-8 md:col-start-3">
           <div

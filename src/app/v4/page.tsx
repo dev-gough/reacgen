@@ -148,6 +148,44 @@ function Hero() {
               fifty times a second, three hundred steam cycles long.
             </em>
           </p>
+
+          <div
+            className="mt-12 flex flex-wrap items-baseline gap-x-10 gap-y-4"
+            style={{ animation: "rg-fade-up 1200ms ease-out 540ms both" }}
+          >
+            <TrackedLink
+              href="/v3/whitelist"
+              ctaId="hero-evaluation-v4"
+              location="hero"
+              className="group inline-flex items-baseline gap-3 border-b pb-1 text-[1.15rem] transition-colors"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 400,
+                color: INK,
+                borderColor: INK,
+              }}
+            >
+              Request an evaluation
+              <span
+                className="transition-transform group-hover:translate-x-1"
+                style={{ fontStyle: "italic" }}
+              >
+                →
+              </span>
+            </TrackedLink>
+            <Link
+              href="#instrument"
+              className="text-[14px]"
+              style={{
+                fontFamily: "var(--font-sans)",
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: INK_SOFT,
+              }}
+            >
+              About the instrument
+            </Link>
+          </div>
         </div>
       </div>
     </section>

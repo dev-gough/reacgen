@@ -170,10 +170,41 @@ function Hero() {
           </p>
 
           <div
+            className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3"
+            style={{ animation: "rg-fade-up 800ms ease-out 460ms both" }}
+          >
+            <TrackedLink
+              href="/v2/whitelist"
+              ctaId="hero-evaluation-v2"
+              location="hero"
+              className="inline-flex items-center gap-3 px-6 py-3 text-[11px] tracking-[0.22em] uppercase transition-colors hover:opacity-90"
+              style={{
+                fontFamily: "var(--font-mono)",
+                background: BRAND,
+                color: BG,
+              }}
+            >
+              Request unit
+              <span aria-hidden>→</span>
+            </TrackedLink>
+            <a
+              href="#schematic"
+              className="inline-flex items-center gap-2 px-5 py-3 text-[11px] tracking-[0.22em] uppercase transition-colors"
+              style={{
+                fontFamily: "var(--font-mono)",
+                border: `1px solid ${GRID}`,
+                color: TEXT,
+              }}
+            >
+              View schematic
+            </a>
+          </div>
+
+          <div
             className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 md:grid-cols-4"
             style={{
               fontFamily: "var(--font-mono)",
-              animation: "rg-fade-up 800ms ease-out 520ms both",
+              animation: "rg-fade-up 800ms ease-out 620ms both",
             }}
           >
             <Spec label="Range" value="0.001 – 200 OD" />
@@ -385,7 +416,7 @@ function Schematic() {
   ];
 
   return (
-    <section className="relative z-10 mx-auto max-w-[88rem] px-6 py-16 md:px-10 md:py-24">
+    <section id="schematic" className="relative z-10 mx-auto max-w-[88rem] px-6 py-16 md:px-10 md:py-24">
       <SectionHead
         kicker="// 02 / mechanical"
         title="Cross-section"
