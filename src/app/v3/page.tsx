@@ -165,7 +165,7 @@ function Hero() {
         style={{ animation: "rg-fade-up 800ms ease-out 520ms both" }}
       >
         <Link
-          href="#contact"
+          href="/v3/whitelist"
           className="inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-[15px] transition-transform hover:translate-y-[-1px]"
           style={{
             background: INK,
@@ -713,7 +713,7 @@ function CTA() {
 
             <div className="mt-10 flex flex-wrap items-center gap-5">
               <Link
-                href="mailto:probe@reacgen.bio"
+                href="/v3/whitelist"
                 className="inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-[15px] transition-transform hover:translate-y-[-1px]"
                 style={{ background: INK, color: BG }}
               >

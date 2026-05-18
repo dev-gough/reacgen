@@ -964,7 +964,7 @@ function CTA() {
 
         <div className="mt-10 flex flex-wrap items-center gap-5">
           <Link
-            href="#"
+            href="/v2/whitelist"
             className="inline-flex items-center gap-3 px-6 py-3 text-[11px] tracking-[0.22em] uppercase transition-colors"
             style={{
               fontFamily: "var(--font-mono)",

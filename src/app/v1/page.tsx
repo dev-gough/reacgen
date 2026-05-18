@@ -661,7 +661,7 @@ function Correspondence() {
           </dl>
 
           <Link
-            href="#"
+            href="/v1/whitelist"
             className="mt-10 inline-flex items-center gap-3 px-5 py-3 text-[11px] tracking-[0.24em] uppercase transition-colors hover:opacity-80"
             style={{
               fontFamily: "var(--font-mono)",
