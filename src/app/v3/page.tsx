@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Instrument_Sans, Instrument_Serif, DM_Mono } from "next/font/google";
-import { ArrowUpRight, Beaker, CircuitBoard, Microscope, ShieldCheck, Waves } from "lucide-react";
+import { ArrowUpRight, Beaker, CircuitBoard, Microscope, MessagesSquare, ShieldCheck, Waves } from "lucide-react";
+import { TrackedLink } from "@/components/TrackedLink";
 
 const sans = Instrument_Sans({
   subsets: ["latin"],
@@ -88,6 +89,15 @@ function Nav() {
         <Link href="#research" className="hover:text-[#0F1311] transition-colors">
           Research
         </Link>
+        <TrackedLink
+          href="http://forum.reacgen.local/"
+          ctaId="forum-v3-nav"
+          location="nav"
+          className="inline-flex items-center gap-1.5 hover:text-[#0F1311] transition-colors"
+        >
+          Community
+          <MessagesSquare size={14} strokeWidth={1.5} />
+        </TrackedLink>
         <Link href="#contact" className="hover:text-[#0F1311] transition-colors">
           Contact
         </Link>
@@ -744,6 +754,46 @@ function CTA() {
               <Contact label="Press" value="press@reacgen.bio" />
               <Contact label="Address" value={`1842 Industrial Way\nSouth San Francisco, CA 94080`} />
             </dl>
+
+            <TrackedLink
+              href="http://forum.reacgen.local/"
+              ctaId="forum-v3-contact"
+              location="contact-panel"
+              className="group mt-10 flex items-start gap-4 rounded-sm border bg-white p-5 transition-colors hover:border-[rgba(47,143,102,0.5)] no-underline"
+              style={{ borderColor: HAIR }}
+            >
+              <span
+                className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full"
+                style={{ background: BG, color: BRAND, border: `1px solid ${HAIR}` }}
+              >
+                <MessagesSquare size={16} strokeWidth={1.5} />
+              </span>
+              <div className="flex-1">
+                <p
+                  className="text-[11px] tracking-[0.22em] uppercase"
+                  style={{ color: BRAND }}
+                >
+                  Community
+                </p>
+                <p
+                  className="mt-1.5 text-[15px] leading-[1.45]"
+                  style={{ color: INK, fontFamily: "var(--font-sans)", fontWeight: 500 }}
+                >
+                  Public discussion at forum.reacgen.local
+                </p>
+                <p
+                  className="mt-1 text-[13px] leading-[1.5]"
+                  style={{ color: SOFT, fontFamily: "var(--font-sans)" }}
+                >
+                  FAQs, manuals, and an open thread for engineering questions.
+                </p>
+              </div>
+              <ArrowUpRight
+                size={16}
+                className="mt-1 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                style={{ color: SOFT }}
+              />
+            </TrackedLink>
           </div>
         </div>
       </div>

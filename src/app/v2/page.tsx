@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { TrackedLink } from "@/components/TrackedLink";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Major_Mono_Display } from "next/font/google";
 
 const display = Major_Mono_Display({
@@ -99,6 +100,15 @@ function StatusBar() {
 
       <div className="flex items-center gap-6">
         <span className="hidden md:inline">Modbus · MQTT · 4–20 mA</span>
+        <TrackedLink
+          href="http://forum.reacgen.local/"
+          ctaId="forum-v2-statusbar"
+          location="statusbar"
+          className="inline-flex items-center gap-1.5 transition-colors hover:text-[#7CFFAE]"
+          style={{ color: BRAND }}
+        >
+          // community
+        </TrackedLink>
         <div className="flex items-center gap-2">
           <span
             className="inline-block size-2 rounded-full"
@@ -987,6 +997,49 @@ function CTA() {
             Download datasheet (PDF)
           </Link>
         </div>
+      </div>
+
+      <div
+        className="mt-6 border p-6 md:p-8"
+        style={{
+          borderColor: GRID,
+          background: `linear-gradient(180deg, ${PANEL} 0%, #0a0d11 100%)`,
+        }}
+      >
+        <p
+          className="text-[11px] tracking-[0.32em] uppercase"
+          style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+        >
+          // community
+        </p>
+        <TrackedLink
+          href="http://forum.reacgen.local/"
+          ctaId="forum-v2-cta"
+          location="cta-panel"
+          className="group mt-5 flex items-center justify-between gap-4 border px-5 py-4 transition-colors hover:bg-[#0A1410]"
+          style={{
+            borderColor: BRAND,
+            fontFamily: "var(--font-mono)",
+          }}
+        >
+          <span className="text-[0.95rem] md:text-[1rem]" style={{ color: BRAND }}>
+            <span style={{ color: HOT }}>$</span>{" "}
+            <span style={{ color: TEXT }}>ssh</span> forum.reacgen.local{" "}
+            <span style={{ color: MUTED }}>--join --as=engineer</span>
+          </span>
+          <span
+            className="text-[1.1rem] transition-transform group-hover:translate-x-1"
+            style={{ color: HOT }}
+          >
+            ↵
+          </span>
+        </TrackedLink>
+        <p
+          className="mt-3 text-[10.5px] tracking-[0.16em] uppercase"
+          style={{ color: MUTED, fontFamily: "var(--font-mono)" }}
+        >
+          FAQs · manuals · release notes · open thread
+        </p>
       </div>
     </section>
   );

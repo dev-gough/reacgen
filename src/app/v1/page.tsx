@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Fraunces, Newsreader, Fragment_Mono } from "next/font/google";
+import { TrackedLink } from "@/components/TrackedLink";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default function V1Page() {
         <Methods />
         <Applications />
         <Quote />
+        <Letters />
         <References />
         <Correspondence />
         <Colophon />
@@ -94,10 +96,19 @@ function Masthead() {
         </span>
       </div>
       <div
-        className="text-[11px] tracking-[0.22em] uppercase hidden md:block"
+        className="hidden items-baseline gap-6 text-[11px] tracking-[0.22em] uppercase md:flex"
         style={{ fontFamily: "var(--font-mono)" }}
       >
-        Vol. I &nbsp;·&nbsp; Issue 01 &nbsp;·&nbsp; Spring 2026
+        <span>Vol. I &nbsp;·&nbsp; Issue 01 &nbsp;·&nbsp; Spring 2026</span>
+        <TrackedLink
+          href="http://forum.reacgen.local/"
+          ctaId="forum-v1-masthead"
+          location="masthead"
+          className="inline-flex items-baseline gap-1.5 transition-opacity hover:opacity-60"
+        >
+          Letters
+          <span aria-hidden style={{ color: GREEN }}>→</span>
+        </TrackedLink>
       </div>
     </header>
   );
@@ -558,6 +569,54 @@ function Quote() {
           <span style={{ color: GREEN }}>—</span> identity withheld
         </figcaption>
       </figure>
+    </section>
+  );
+}
+
+function Letters() {
+  return (
+    <section className="mx-auto max-w-[78rem] px-6 pb-12 md:px-16">
+      <div
+        className="grid grid-cols-12 items-center gap-x-10 gap-y-6 border-y py-10 md:py-12"
+        style={{ borderColor: "rgba(26,24,20,0.4)" }}
+      >
+        <div className="col-span-12 md:col-span-3">
+          <p
+            className="text-[10px] tracking-[0.32em] uppercase"
+            style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+          >
+            Letters page
+          </p>
+        </div>
+        <div className="col-span-12 md:col-span-6">
+          <p
+            className="text-[1.15rem] leading-[1.5]"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            <em style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}>
+              Reader correspondence,
+            </em>{" "}
+            release notes, and open discussion are kept at the public bulletin
+            board. Engineers, customers, and the curious all welcome.
+          </p>
+        </div>
+        <div className="col-span-12 md:col-span-3 md:justify-self-end">
+          <TrackedLink
+            href="http://forum.reacgen.local/"
+            ctaId="forum-v1-letters"
+            location="letters-section"
+            className="inline-flex items-center gap-3 border px-5 py-3 text-[11px] tracking-[0.24em] uppercase transition-colors hover:bg-[#1A1814] hover:text-[#F3EDE0]"
+            style={{
+              fontFamily: "var(--font-mono)",
+              borderColor: "#1A1814",
+              color: "#1A1814",
+            }}
+          >
+            Visit forum
+            <span aria-hidden style={{ color: GREEN }}>→</span>
+          </TrackedLink>
+        </div>
+      </div>
     </section>
   );
 }
