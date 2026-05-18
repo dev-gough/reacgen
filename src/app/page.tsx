@@ -50,6 +50,15 @@ const variants = [
     palette: ["#FAFAF6", "#0F1311", "#2F8F66"],
     fonts: "Instrument Serif · Instrument Sans · DM Mono",
   },
+  {
+    code: "v4",
+    href: "/v4",
+    name: "Quiet",
+    tagline: "Monochrome warm · serif, asymmetric, sparse",
+    body: "Aesop / Cereal school. Sand background, umber ink, no second accent — the brand green only appears via the logo. Indented asymmetric grid, marginalia-style section labels. All-serif type, no monospace. For the customer who reads slowly.",
+    palette: ["#EFE7D6", "#2C2218", "#74634F"],
+    fonts: "Cormorant Garamond · Tenor Sans",
+  },
 ];
 
 const PAGE_BG = "#0A0A0A";
@@ -127,7 +136,7 @@ export default function IndexPage() {
 
       <section className="mx-auto max-w-[78rem] px-6 pb-32 md:px-12">
         <ul
-          className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-sm border md:grid-cols-3"
+          className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-sm border md:grid-cols-2 lg:grid-cols-4"
           style={{ borderColor: "#1A1A1A", background: "#1A1A1A" }}
         >
           {variants.map((v, i) => (
