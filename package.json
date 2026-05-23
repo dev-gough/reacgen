@@ -10,9 +10,12 @@
     "db:generate": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs generate",
     "db:migrate": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs migrate",
     "db:push": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs push",
-    "db:studio": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs studio"
+    "db:studio": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs studio",
+    "db:seed": "node --env-file=.env.local --import tsx src/db/seed.ts"
   },
   "dependencies": {
+    "@better-auth/drizzle-adapter": "^1.6.11",
+    "better-auth": "^1.6.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
@@ -34,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
+    "tsx": "^4.22.1",
     "typescript": "^5"
   }
 }

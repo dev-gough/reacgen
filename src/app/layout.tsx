@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { ThemeProvider, themeBootstrapScript } from "@/lib/theme";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,8 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
+      <head>
+        {/* Apply saved theme before hydration to avoid a flash of the wrong palette. */}
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
+      </head>
       <body className="min-h-full flex flex-col">
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
         {ANALYTICS_DISABLED ? null : (
           <Script
             defer

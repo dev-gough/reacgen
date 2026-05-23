@@ -1,64 +1,98 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Instrument_Sans, Instrument_Serif, DM_Mono } from "next/font/google";
-import { ArrowUpRight, Beaker, CircuitBoard, Microscope, MessagesSquare, ShieldCheck, Waves } from "lucide-react";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Beaker,
+  CircuitBoard,
+  Cpu,
+  Gauge,
+  Layers,
+  MessagesSquare,
+  Plug,
+  ShieldCheck,
+  ShoppingBag,
+  Sparkles,
+  Thermometer,
+  UserRound,
+  Workflow,
+} from "lucide-react";
 import { TrackedLink } from "@/components/TrackedLink";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
-const sans = Instrument_Sans({
+const sans = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const serif = Instrument_Serif({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const mono = DM_Mono({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Reacgen — Continuous optical density for bioprocess",
+  title: "Reacgen ODX-1 — Continuous optical density, on every reactor",
   description:
-    "An in-situ optical density sensor designed for continuous bioprocess monitoring. Validated across CHO, HEK, E. coli, and yeast.",
+    "Plug-in optical density for bioreactors. Real-time OD at 50 Hz, no sampling, no drift. Ships from San Francisco.",
 };
 
-const BG = "#FAFAF6";
-const INK = "#0F1311";
-const HAIR = "#E5E5DC";
-const SOFT = "#67726B";
-const BRAND = "#2F8F66";
+const BG = "#F4F8FC";
+const INK = "#0B1F33";
+const HAIR = "#DBE6F1";
+const SOFT = "#5D7892";
+const BRAND = "#2F7FB8";
+const HIGHLIGHT = "#FFE45A";
+const CARD = "#FFFFFF";
 
 export default function V3Page() {
   return (
     <div
-      className={`${sans.variable} ${serif.variable} ${mono.variable} min-h-screen`}
+      className={`${sans.variable} ${mono.variable} min-h-screen`}
       style={{
         background: BG,
         color: INK,
         fontFamily: "var(--font-sans)",
       }}
     >
+      <Banner />
       <Nav />
       <Hero />
-      <Metrics />
-      <Showcase />
-      <HowItWorks />
+      <Features />
       <DesignedFor />
-      <Research />
-      <Partners />
-      <CTA />
+      <Dashboard />
+      <Specs />
+      <Notebook />
+      <Newsletter />
       <Foot />
+    </div>
+  );
+}
+
+function Banner() {
+  return (
+    <div
+      className="w-full border-b text-center text-[12.5px]"
+      style={{
+        background: INK,
+        color: BG,
+        borderColor: INK,
+        fontFamily: "var(--font-mono)",
+        animation: "rg-fade-in 500ms ease-out both",
+      }}
+    >
+      <div className="mx-auto flex max-w-[80rem] flex-wrap items-center justify-center gap-x-3 gap-y-1 px-6 py-2.5">
+        <span style={{ color: HIGHLIGHT }}>● </span>
+        <span>Now shipping v0.4 — 2-week lead time from San Francisco.</span>
+        <Link href="#shop" className="underline underline-offset-2 opacity-80 hover:opacity-100">
+          See what&apos;s in the box →
+        </Link>
+      </div>
     </div>
   );
 }
@@ -66,606 +100,421 @@ export default function V3Page() {
 function Nav() {
   return (
     <nav
-      className="mx-auto flex max-w-[80rem] items-center justify-between px-6 py-6 md:px-10"
+      className="mx-auto flex max-w-[80rem] items-center justify-between px-6 py-5 md:px-10"
       style={{ animation: "rg-fade-in 600ms ease-out both" }}
     >
-      <Link href="/" className="flex items-center gap-3">
-        <Image src="/logo-mark.png" alt="Reacgen Biosystems" width={28} height={28} />
-        <span className="text-[1rem] tracking-tight" style={{ fontWeight: 500 }}>
-          Reacgen
+      <Link href="/" className="flex items-center gap-2.5">
+        <Image src="/logo-mark.png" alt="Reacgen Biosystems" width={26} height={26} />
+        <span className="text-[1.05rem] tracking-tight" style={{ fontWeight: 600 }}>
+          reacgen
+        </span>
+        <span
+          className="ml-1.5 hidden rounded-full px-2 py-0.5 text-[10px] tracking-wider uppercase sm:inline"
+          style={{
+            background: HIGHLIGHT,
+            color: INK,
+            fontFamily: "var(--font-mono)",
+            fontWeight: 500,
+          }}
+        >
+          v0.4
         </span>
       </Link>
 
       <div
-        className="hidden items-center gap-8 text-[14px] md:flex"
+        className="hidden items-center gap-7 text-[14px] md:flex"
         style={{ color: SOFT }}
       >
-        <Link href="#product" className="hover:text-[#0F1311] transition-colors">
-          Product
+        <Link href="#shop" className="hover:text-[#0B1F33] transition-colors">
+          Shop
         </Link>
-        <Link href="#science" className="hover:text-[#0F1311] transition-colors">
-          Science
+        <Link href="#how" className="hover:text-[#0B1F33] transition-colors">
+          How it works
         </Link>
-        <Link href="#research" className="hover:text-[#0F1311] transition-colors">
-          Research
+        <Link href="#specs" className="hover:text-[#0B1F33] transition-colors">
+          Specs
+        </Link>
+        <Link href="#notebook" className="hover:text-[#0B1F33] transition-colors">
+          Notebook
         </Link>
         <TrackedLink
           href="http://forum.reacgen.local/"
           ctaId="forum-v3-nav"
           location="nav"
-          className="inline-flex items-center gap-1.5 hover:text-[#0F1311] transition-colors"
+          className="inline-flex items-center gap-1 hover:text-[#0B1F33] transition-colors"
         >
-          Community
-          <MessagesSquare size={14} strokeWidth={1.5} />
+          Forum
+          <MessagesSquare size={13} strokeWidth={1.75} />
         </TrackedLink>
-        <Link href="#contact" className="hover:text-[#0F1311] transition-colors">
-          Contact
-        </Link>
       </div>
 
-      <Link
-        href="#contact"
-        className="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2 text-[13px] transition-colors"
-        style={{
-          background: INK,
-          color: BG,
-        }}
-      >
-        Request a demo
-        <ArrowUpRight size={14} />
-      </Link>
+      <div className="flex items-center gap-2">
+        <ThemeToggle
+          className="inline-flex size-9 items-center justify-center rounded-full border transition-colors hover:bg-white"
+          style={{ borderColor: HAIR, color: INK, background: "transparent" }}
+        />
+        <Link
+          href="/v3/account"
+          className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] transition-colors hover:bg-white"
+          style={{
+            background: "transparent",
+            color: INK,
+            borderColor: HAIR,
+          }}
+        >
+          <UserRound size={14} strokeWidth={1.75} />
+          <span className="hidden sm:inline">Account</span>
+        </Link>
+        <Link
+          href="#shop"
+          className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] transition-transform hover:translate-y-[-1px]"
+          style={{
+            background: INK,
+            color: BG,
+            borderColor: INK,
+            fontWeight: 500,
+          }}
+        >
+          <ShoppingBag size={14} strokeWidth={1.75} />
+          Shop ODX-1
+        </Link>
+      </div>
     </nav>
   );
 }
 
 function Hero() {
   return (
-    <section className="mx-auto max-w-[80rem] px-6 pt-12 pb-24 md:px-10 md:pt-20 md:pb-32">
+    <section className="relative mx-auto max-w-[80rem] px-6 pt-10 pb-20 md:px-10 md:pt-16 md:pb-28">
+      {/* margin note, top right */}
       <p
-        className="mb-10 flex items-center gap-3 text-[12px] tracking-wide"
+        className="absolute right-6 top-12 hidden max-w-[180px] rotate-[3deg] text-right text-[12px] leading-snug md:block md:right-10"
         style={{
           color: SOFT,
+          fontFamily: "var(--font-mono)",
+          animation: "rg-fade-up 1000ms ease-out 900ms both",
+        }}
+      >
+        ↘ no sampling.
+        <br />
+        no drift.
+        <br />
+        no excuses.
+      </p>
+
+      <p
+        className="mb-7 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] tracking-wide"
+        style={{
+          color: SOFT,
+          borderColor: HAIR,
+          background: CARD,
+          fontFamily: "var(--font-mono)",
           animation: "rg-fade-up 700ms ease-out 80ms both",
         }}
       >
-        <span
-          className="inline-block size-1.5 rounded-full"
-          style={{ background: BRAND }}
-        />
-        Now shipping · Reacgen ODX-1
+        <Sparkles size={11} strokeWidth={2} style={{ color: BRAND }} />
+        For fermentation teams who hate pulling samples.
       </p>
 
       <h1
-        className="max-w-5xl leading-[0.98] tracking-[-0.025em]"
+        className="max-w-[60rem] leading-[0.98] tracking-[-0.03em]"
         style={{
-          fontSize: "clamp(2.6rem, 7.5vw, 6.2rem)",
-          fontWeight: 500,
+          fontSize: "clamp(2.6rem, 7.5vw, 5.8rem)",
+          fontWeight: 600,
           animation: "rg-fade-up 800ms ease-out 200ms both",
         }}
       >
-        Continuous optical density
+        Watch your{" "}
+        <span className="relative inline-block">
+          cells grow
+          <Squiggle />
+        </span>
+        ,
         <br />
-        <span
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontStyle: "italic",
-            fontWeight: 400,
-            color: BRAND,
-          }}
-        >
-          for every bioreactor
-        </span>{" "}
-        you operate.
+        on every reactor,
+        <br />
+        in real time.
       </h1>
 
       <p
-        className="mt-10 max-w-2xl text-[1.2rem] leading-[1.55]"
+        className="mt-9 max-w-[40rem] text-[1.15rem] leading-[1.5]"
         style={{
           color: SOFT,
           animation: "rg-fade-up 800ms ease-out 360ms both",
         }}
       >
-        An in-situ probe that measures cell density at 50 Hz, survives every
-        SIP cycle, and reports the same value the offline spectrophotometer
-        would have — without ever pulling a sample.
+        ODX-1 is a drop-in optical density probe for bioreactors. Plug it into
+        an Ingold port, point your DCS at it, and skip the sampling protocol.
+        Same number your bench instrument would give you. At 50 Hz.
       </p>
 
       <div
-        className="mt-12 flex flex-wrap items-center gap-5"
+        className="mt-10 flex flex-wrap items-center gap-3"
         style={{ animation: "rg-fade-up 800ms ease-out 520ms both" }}
       >
         <Link
           href="/v3/whitelist"
-          className="inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-[15px] transition-transform hover:translate-y-[-1px]"
+          className="group inline-flex items-center gap-3 rounded-full px-6 py-3.5 text-[15px] transition-transform hover:translate-y-[-1px]"
           style={{
             background: INK,
             color: BG,
+            fontWeight: 500,
           }}
         >
-          Request a four-week evaluation
-          <ArrowUpRight size={16} />
+          <ShoppingBag size={15} strokeWidth={1.75} />
+          Shop ODX-1
+          <span
+            className="hidden rounded-full px-2 py-0.5 text-[11.5px] sm:inline"
+            style={{
+              background: "rgba(255,228,90,0.95)",
+              color: INK,
+              fontFamily: "var(--font-mono)",
+            }}
+          >
+            from $4,800
+          </span>
+          <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
         </Link>
         <Link
-          href="#science"
-          className="inline-flex items-center gap-2 text-[15px]"
-          style={{ color: INK }}
+          href="#how"
+          className="inline-flex items-center gap-2 rounded-full border px-5 py-3.5 text-[14.5px] transition-colors hover:bg-white"
+          style={{
+            borderColor: HAIR,
+            color: INK,
+            background: "transparent",
+          }}
         >
-          See the validation data
-          <span style={{ color: BRAND }}>→</span>
+          See how it works
+          <ArrowRight size={14} strokeWidth={1.75} style={{ color: BRAND }} />
         </Link>
       </div>
-    </section>
-  );
-}
 
-function Metrics() {
-  const items: [string, string, string][] = [
-    ["0.001 – 200", "OD", "Five decades of dynamic range on a single probe."],
-    ["± 0.5%", "of reading", "Bench-instrument accuracy, in-line."],
-    ["< 50 ms", "response", "Captures induction transitions in real time."],
-    ["≥ 300", "SIP cycles", "Validated thermal endurance, 134 °C."],
-  ];
-
-  return (
-    <section
-      className="border-t border-b"
-      style={{ borderColor: HAIR }}
-    >
+      {/* Product card */}
       <div
-        className="mx-auto grid max-w-[80rem] grid-cols-1 md:grid-cols-4"
-        style={{ animation: "rg-fade-up 800ms ease-out 600ms both" }}
+        className="mt-16 grid grid-cols-12 gap-6"
+        style={{ animation: "rg-fade-up 900ms ease-out 700ms both" }}
       >
-        {items.map(([n, l, d], i) => (
+        <div className="col-span-12 md:col-span-8">
           <div
-            key={n}
-            className="border-t px-6 py-10 md:border-t-0 md:border-l md:px-10 md:py-14"
-            style={{
-              borderColor: HAIR,
-              borderLeftWidth: i === 0 ? 0 : 1,
-              borderTopWidth: i === 0 ? 0 : undefined,
-            }}
-          >
-            <p
-              className="text-[10.5px] tracking-[0.18em] uppercase"
-              style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
-            >
-              {l}
-            </p>
-            <p
-              className="mt-3 tracking-[-0.02em]"
-              style={{
-                fontSize: "clamp(2rem, 4vw, 3rem)",
-                fontWeight: 500,
-                lineHeight: 1,
-              }}
-            >
-              {n}
-            </p>
-            <p className="mt-4 text-[14px] leading-[1.5]" style={{ color: SOFT }}>
-              {d}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Showcase() {
-  return (
-    <section
-      id="product"
-      className="mx-auto max-w-[80rem] px-6 py-24 md:px-10 md:py-32"
-    >
-      <div className="grid grid-cols-12 gap-x-10 gap-y-12">
-        <div className="col-span-12 md:col-span-5">
-          <p
-            className="text-[11px] tracking-[0.22em] uppercase"
-            style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
-          >
-            The Product
-          </p>
-          <h2
-            className="mt-5 max-w-md tracking-[-0.02em]"
-            style={{
-              fontSize: "clamp(2rem, 3.6vw, 2.8rem)",
-              fontWeight: 500,
-              lineHeight: 1.05,
-            }}
-          >
-            One probe.{" "}
-            <span
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                fontWeight: 400,
-              }}
-            >
-              Every host, every scale.
-            </span>
-          </h2>
-          <p
-            className="mt-6 max-w-md text-[16px] leading-[1.6]"
-            style={{ color: SOFT }}
-          >
-            ODX-1 is a dual-wavelength, ratiometric turbidity probe. The 600 nm
-            channel reports OD; the 850 nm channel subtracts bubble scatter.
-            Both share the same optical axis, so calibration is portable across
-            bench, pilot, and production reactors.
-          </p>
-
-          <ul className="mt-10 space-y-5">
-            {[
-              ["12 mm or 25 mm Ingold port", "Drop-in for legacy reactors and EHEDG-compliant for GMP."],
-              ["316L body, sapphire window", "Repeated SIP at 134 °C. No drift across cycles."],
-              ["Modbus, MQTT, 4–20 mA", "Talk to the DCS and the historian at the same time."],
-            ].map(([t, d]) => (
-              <li
-                key={t}
-                className="flex gap-4 border-b pb-5"
-                style={{ borderColor: HAIR }}
-              >
-                <span
-                  className="mt-2 inline-block size-1.5 rounded-full"
-                  style={{ background: BRAND }}
-                />
-                <div>
-                  <p className="text-[15px]" style={{ fontWeight: 500 }}>
-                    {t}
-                  </p>
-                  <p className="mt-1.5 text-[14px] leading-[1.5]" style={{ color: SOFT }}>
-                    {d}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="col-span-12 md:col-span-7">
-          <div
-            className="relative aspect-[5/4] overflow-hidden rounded-sm"
+            className="relative aspect-[16/10] overflow-hidden rounded-2xl border"
             style={{
               background:
-                "radial-gradient(ellipse at 30% 20%, #ffffff 0%, #F4F1E8 60%, #E8E4D5 100%)",
+                "radial-gradient(ellipse at 30% 25%, #ffffff 0%, #E8F1FA 55%, #C9DCEE 100%)",
+              borderColor: HAIR,
             }}
           >
             <Image
               src="/logo-horizontal.png"
-              alt="Reacgen ODX-1"
+              alt="Reacgen ODX-1 probe"
               fill
-              className="object-contain p-12 md:p-20"
+              className="object-contain p-10 md:p-16"
               priority
             />
+
+            {/* hand-drawn-ish callouts */}
             <div
-              className="absolute right-6 bottom-6 flex items-baseline gap-3 text-[11px] tracking-[0.22em] uppercase"
-              style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
+              className="absolute left-6 top-6 max-w-[200px] text-[11px] leading-snug"
+              style={{ color: INK, fontFamily: "var(--font-mono)" }}
             >
-              <span>ODX-1</span>
-              <span style={{ color: BRAND }}>·</span>
-              <span>2026</span>
+              <span
+                className="inline-block rounded-full px-2 py-0.5"
+                style={{ background: HIGHLIGHT }}
+              >
+                01 · 12 mm Ingold thread
+              </span>
+            </div>
+            <div
+              className="absolute right-6 bottom-6 max-w-[200px] text-right text-[11px] leading-snug"
+              style={{ color: INK, fontFamily: "var(--font-mono)" }}
+            >
+              <span
+                className="inline-block rounded-full px-2 py-0.5"
+                style={{ background: HIGHLIGHT }}
+              >
+                02 · sapphire window
+              </span>
+            </div>
+
+            {/* shipping sticker */}
+            <div
+              className="absolute right-5 top-5 rotate-[6deg] rounded-md border-2 px-3 py-1 text-[10.5px] tracking-[0.18em] uppercase"
+              style={{
+                borderColor: INK,
+                color: INK,
+                background: BG,
+                fontFamily: "var(--font-mono)",
+                boxShadow: "2px 2px 0 rgba(11,31,51,0.12)",
+              }}
+            >
+              Ships from SF
             </div>
           </div>
-
-          <div
-            className="mt-6 grid grid-cols-3 gap-x-4 gap-y-2 text-[12px]"
-            style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
-          >
-            <span>L · 318 mm</span>
-            <span>Ø · 12 mm</span>
-            <span>m · 0.42 kg</span>
-          </div>
         </div>
+
+        <aside className="col-span-12 flex flex-col gap-3 md:col-span-4">
+          {[
+            ["OD range", "0.001 – 200", "five decades, one probe"],
+            ["Refresh", "50 Hz", "captures induction in <50 ms"],
+            ["Endurance", "≥ 300 SIP", "validated at 134 °C"],
+            ["Accuracy", "± 0.5%", "matches the bench spec"],
+          ].map(([label, val, sub]) => (
+            <div
+              key={label}
+              className="flex items-baseline gap-4 rounded-xl border bg-white px-4 py-3"
+              style={{ borderColor: HAIR }}
+            >
+              <span
+                className="w-[72px] shrink-0 text-[10.5px] tracking-[0.16em] uppercase"
+                style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
+              >
+                {label}
+              </span>
+              <span className="text-[1.05rem]" style={{ fontWeight: 600 }}>
+                {val}
+              </span>
+              <span className="ml-auto text-right text-[12px]" style={{ color: SOFT }}>
+                {sub}
+              </span>
+            </div>
+          ))}
+        </aside>
       </div>
     </section>
   );
 }
 
-function HowItWorks() {
-  const steps: [string, string, string, React.ReactNode][] = [
-    [
-      "01",
-      "Photons in",
-      "Two LEDs, 600 nm and 850 nm, fire in alternation through a polished sapphire window.",
-      <Waves key="w" size={20} strokeWidth={1.5} />,
-    ],
-    [
-      "02",
-      "Scatter measured",
-      "An 8-element radial detector array reads the diffuse field. Pair imbalance flags fouling early.",
-      <CircuitBoard key="c" size={20} strokeWidth={1.5} />,
-    ],
-    [
-      "03",
-      "OD reported",
-      "850 nm subtracts bubble scatter; the ratio is invariant to LED aging. The output is what your bench would say.",
-      <ShieldCheck key="s" size={20} strokeWidth={1.5} />,
-    ],
-  ];
+function Squiggle() {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 220 16"
+      preserveAspectRatio="none"
+      className="absolute -bottom-1.5 left-0 w-full"
+      style={{ height: "0.45em" }}
+    >
+      <path
+        d="M2 10 Q 30 2, 55 9 T 110 9 T 165 8 T 218 10"
+        fill="none"
+        stroke={HIGHLIGHT}
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
+function Features() {
+  const items: [React.ReactNode, string, string][] = [
+    [<Gauge key="g" size={20} strokeWidth={1.75} />, "Continuous OD", "Reads 50 times a second. No more guessing between offline samples."],
+    [<Thermometer key="t" size={20} strokeWidth={1.75} />, "SIP-rated", "316L body, sapphire window. 300+ steam cycles, no drift."],
+    [<Plug key="p" size={20} strokeWidth={1.75} />, "Talks to everything", "Modbus, MQTT, 4–20 mA, REST. DeltaV, Ignition, your homemade Python script."],
+    [<Layers key="l" size={20} strokeWidth={1.75} />, "Bench to 2000 L", "Same probe, same calibration coefficients. No re-fitting at scale."],
+    [<Cpu key="c" size={20} strokeWidth={1.75} />, "Open API + SDK", "Stream raw photodiode counts if you want. We document everything."],
+    [<Workflow key="w" size={20} strokeWidth={1.75} />, "Two-channel optics", "850 nm subtracts bubble scatter from 600 nm. Aeration becomes a non-issue."],
+  ];
   return (
     <section
-      id="science"
+      id="how"
       className="border-t"
       style={{ borderColor: HAIR }}
     >
-      <div className="mx-auto max-w-[80rem] px-6 py-24 md:px-10 md:py-32">
-        <p
-          className="text-[11px] tracking-[0.22em] uppercase"
-          style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
-        >
-          How it works
-        </p>
-        <h2
-          className="mt-5 max-w-2xl tracking-[-0.02em]"
-          style={{
-            fontSize: "clamp(2rem, 3.6vw, 2.8rem)",
-            fontWeight: 500,
-            lineHeight: 1.05,
-          }}
-        >
-          The optics are inside the vessel.{" "}
-          <span
+      <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-y-4">
+          <h2
+            className="max-w-2xl tracking-[-0.025em]"
             style={{
-              fontFamily: "var(--font-serif)",
-              fontStyle: "italic",
-              fontWeight: 400,
-              color: SOFT,
+              fontSize: "clamp(1.9rem, 3.4vw, 2.6rem)",
+              fontWeight: 600,
+              lineHeight: 1.05,
             }}
           >
-            Everything else is signal.
-          </span>
-        </h2>
+            Everything you wish your old OD probe did.
+          </h2>
+          <p
+            className="max-w-md text-[14.5px] leading-[1.55]"
+            style={{ color: SOFT }}
+          >
+            We started Reacgen because we were tired of pulling samples at 3am.
+            ODX-1 is the probe we wanted to buy.
+          </p>
+        </div>
 
-        <ol className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3">
-          {steps.map(([n, t, d, icon]) => (
-            <li key={n} className="relative">
-              <div
-                className="absolute -left-1 -top-1 inline-flex size-9 items-center justify-center rounded-full"
+        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border md:grid-cols-3"
+          style={{ borderColor: HAIR, background: HAIR }}
+        >
+          {items.map(([icon, title, body]) => (
+            <div
+              key={title}
+              className="flex flex-col gap-3 p-7 transition-colors"
+              style={{ background: CARD }}
+            >
+              <span
+                className="inline-flex size-9 items-center justify-center rounded-full"
                 style={{ background: BG, color: BRAND, border: `1px solid ${HAIR}` }}
               >
                 {icon}
-              </div>
-              <p
-                className="ml-14 text-[11px] tracking-[0.22em] uppercase"
-                style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
-              >
-                Step {n}
-              </p>
-              <h3
-                className="ml-14 mt-2 text-[1.4rem] tracking-[-0.01em]"
-                style={{ fontWeight: 500, lineHeight: 1.15 }}
-              >
-                {t}
+              </span>
+              <h3 className="mt-1 text-[1.05rem] tracking-[-0.01em]" style={{ fontWeight: 600 }}>
+                {title}
               </h3>
-              <p
-                className="ml-14 mt-3 text-[15px] leading-[1.6]"
-                style={{ color: SOFT }}
-              >
-                {d}
+              <p className="text-[14px] leading-[1.55]" style={{ color: SOFT }}>
+                {body}
               </p>
-            </li>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );
 }
 
 function DesignedFor() {
-  const tiles: [string, string, string, React.ReactNode][] = [
-    [
-      "Mammalian cell culture",
-      "CHO, HEK293, Vero",
-      "Tracks biomass through perfusion, fed-batch, and seed train without sampling.",
-      <Microscope key="m" size={18} strokeWidth={1.5} />,
-    ],
-    [
-      "Microbial fermentation",
-      "E. coli, P. pastoris, S. cerevisiae",
-      "Linear across the full exponential phase. Captures induction in under 50 ms.",
-      <Beaker key="b" size={18} strokeWidth={1.5} />,
-    ],
-    [
-      "Single-use platforms",
-      "Sartorius · Cytiva · ABEC",
-      "External clamp variant for bagged reactors. Same calibration as the wetted unit.",
-      <CircuitBoard key="c" size={18} strokeWidth={1.5} />,
-    ],
-  ];
-
-  return (
-    <section className="mx-auto max-w-[80rem] px-6 py-24 md:px-10 md:py-32">
-      <div className="flex flex-wrap items-end justify-between gap-y-6">
-        <div>
-          <p
-            className="text-[11px] tracking-[0.22em] uppercase"
-            style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
-          >
-            Designed for
-          </p>
-          <h2
-            className="mt-5 max-w-2xl tracking-[-0.02em]"
-            style={{
-              fontSize: "clamp(2rem, 3.6vw, 2.8rem)",
-              fontWeight: 500,
-              lineHeight: 1.05,
-            }}
-          >
-            Validated across the bioprocess stack.
-          </h2>
-        </div>
-        <p className="max-w-md text-[15px] leading-[1.6]" style={{ color: SOFT }}>
-          From 250 mL development reactors to 2000 L production tanks. The same
-          probe, the same calibration coefficients.
-        </p>
-      </div>
-
-      <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-        {tiles.map(([title, sub, body, icon]) => (
-          <article
-            key={title}
-            className="group relative flex h-full flex-col rounded-sm border p-8 transition-colors hover:bg-white"
-            style={{ borderColor: HAIR }}
-          >
-            <div
-              className="inline-flex size-9 items-center justify-center rounded-full"
-              style={{ background: BG, color: BRAND, border: `1px solid ${HAIR}` }}
-            >
-              {icon}
-            </div>
-            <h3
-              className="mt-8 text-[1.25rem] tracking-[-0.01em]"
-              style={{ fontWeight: 500, lineHeight: 1.2 }}
-            >
-              {title}
-            </h3>
-            <p
-              className="mt-1 text-[12px] tracking-[0.12em] uppercase"
-              style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
-            >
-              {sub}
-            </p>
-            <p className="mt-5 flex-1 text-[15px] leading-[1.6]" style={{ color: SOFT }}>
-              {body}
-            </p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Research() {
-  const papers: [string, string, string, string][] = [
-    [
-      "Dual-wavelength compensation of bubble scattering",
-      "Nature Biotechnology",
-      "Park, Hsu et al. · 2024",
-      "Read",
-    ],
-    [
-      "NIST-traceable references for in-situ OD",
-      "Biotechnol. Bioeng.",
-      "Chen, Adeyemi · 2025",
-      "Read",
-    ],
-    [
-      "ODX-1 validation across mammalian & microbial hosts",
-      "Reacgen Internal Report",
-      "RBS-VR-014 · 2026",
-      "Download (PDF)",
-    ],
-  ];
-
-  return (
-    <section
-      id="research"
-      className="border-t"
-      style={{ borderColor: HAIR }}
-    >
-      <div className="mx-auto max-w-[80rem] px-6 py-24 md:px-10 md:py-32">
-        <div className="flex flex-wrap items-end justify-between gap-y-6">
-          <div>
-            <p
-              className="text-[11px] tracking-[0.22em] uppercase"
-              style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
-            >
-              Selected research
-            </p>
-            <h2
-              className="mt-5 max-w-2xl tracking-[-0.02em]"
-              style={{
-                fontSize: "clamp(2rem, 3.6vw, 2.8rem)",
-                fontWeight: 500,
-                lineHeight: 1.05,
-              }}
-            >
-              The work behind the instrument.
-            </h2>
-          </div>
-          <Link
-            href="#"
-            className="inline-flex items-center gap-2 text-[15px]"
-            style={{ color: INK }}
-          >
-            Publications archive
-            <ArrowUpRight size={15} style={{ color: BRAND }} />
-          </Link>
-        </div>
-
-        <ul
-          className="mt-12 divide-y border-t border-b"
-          style={{ borderColor: HAIR }}
-        >
-          {papers.map(([t, j, a, cta]) => (
-            <li
-              key={t}
-              className="grid grid-cols-12 gap-x-6 gap-y-2 py-7 transition-colors hover:bg-white"
-              style={{ borderColor: HAIR }}
-            >
-              <p
-                className="col-span-12 text-[10.5px] tracking-[0.22em] uppercase md:col-span-3"
-                style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
-              >
-                {j}
-              </p>
-              <div className="col-span-12 md:col-span-7">
-                <p
-                  className="text-[1.05rem] leading-tight"
-                  style={{ fontWeight: 500 }}
-                >
-                  {t}
-                </p>
-                <p className="mt-1.5 text-[13px]" style={{ color: SOFT }}>
-                  {a}
-                </p>
-              </div>
-              <Link
-                href="#"
-                className="col-span-12 inline-flex items-center gap-2 text-[14px] md:col-span-2 md:justify-end"
-                style={{ color: BRAND }}
-              >
-                {cta} <ArrowUpRight size={14} />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-function Partners() {
-  const partners = [
-    "Stanford Bioengineering",
-    "ETH Zürich",
-    "Broad Institute",
-    "MPI Magdeburg",
-    "NIST",
-    "EMBL Heidelberg",
+  const pills = [
+    "process dev teams",
+    "bioprocess engineers",
+    "CHO + HEK + Vero",
+    "E. coli + yeast",
+    "perfusion runs",
+    "fed-batch",
+    "Sartorius bags",
+    "ABEC",
+    "Cytiva",
+    "grad students with one shaker flask",
   ];
   return (
     <section
       className="border-t"
       style={{ borderColor: HAIR }}
     >
-      <div className="mx-auto max-w-[80rem] px-6 py-16 md:px-10 md:py-20">
+      <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-24">
         <p
-          className="text-[10.5px] tracking-[0.22em] uppercase"
-          style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
+          className="text-[11px] tracking-[0.2em] uppercase"
+          style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
         >
-          Co-developed and validated with
+          designed for
         </p>
-        <div
-          className="mt-8 grid grid-cols-2 gap-y-6 md:grid-cols-6"
-          style={{ fontFamily: "var(--font-serif)" }}
+        <h2
+          className="mt-4 max-w-3xl tracking-[-0.025em]"
+          style={{
+            fontSize: "clamp(1.7rem, 3vw, 2.3rem)",
+            fontWeight: 600,
+            lineHeight: 1.1,
+          }}
         >
-          {partners.map((p) => (
+          Bioprocess teams, fermentation labs, and anyone who&apos;s ever
+          watched a culture crash overnight.
+        </h2>
+
+        <div className="mt-10 flex flex-wrap gap-2.5">
+          {pills.map((p, i) => (
             <span
               key={p}
-              className="text-[1.05rem] tracking-tight"
-              style={{ color: INK, opacity: 0.75 }}
+              className="rounded-full border px-3.5 py-1.5 text-[13px]"
+              style={{
+                borderColor: HAIR,
+                background: i % 3 === 0 ? "rgba(47,127,184,0.08)" : CARD,
+                color: INK,
+              }}
             >
               {p}
             </span>
@@ -676,124 +525,57 @@ function Partners() {
   );
 }
 
-function CTA() {
+function Dashboard() {
   return (
     <section
-      id="contact"
       className="border-t"
       style={{ borderColor: HAIR }}
     >
-      <div className="mx-auto max-w-[80rem] px-6 py-24 md:px-10 md:py-32">
-        <div className="grid grid-cols-12 gap-x-10 gap-y-10">
-          <div className="col-span-12 md:col-span-7">
+      <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12 md:col-span-5">
             <p
-              className="text-[11px] tracking-[0.22em] uppercase"
+              className="text-[11px] tracking-[0.2em] uppercase"
               style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
             >
-              Get started
+              the dashboard
             </p>
             <h2
-              className="mt-5 max-w-2xl tracking-[-0.02em]"
+              className="mt-4 max-w-md tracking-[-0.025em]"
               style={{
-                fontSize: "clamp(2.4rem, 5vw, 4.4rem)",
-                fontWeight: 500,
-                lineHeight: 1,
+                fontSize: "clamp(1.7rem, 3vw, 2.3rem)",
+                fontWeight: 600,
+                lineHeight: 1.1,
               }}
             >
-              Try the probe in{" "}
-              <span
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontStyle: "italic",
-                  fontWeight: 400,
-                  color: BRAND,
-                }}
-              >
-                your next run.
-              </span>
+              See every reactor on one screen. Or don&apos;t — your DCS is fine too.
             </h2>
-            <p
-              className="mt-6 max-w-xl text-[1.1rem] leading-[1.55]"
-              style={{ color: SOFT }}
-            >
-              We&apos;ll send a calibrated ODX-1 and a process engineer to install
-              it. Four weeks alongside your current method. You keep the data
-              — purchase only if the numbers convince you.
+            <p className="mt-5 max-w-md text-[15px] leading-[1.6]" style={{ color: SOFT }}>
+              We ship a free web app that auto-discovers any ODX-1 on the same
+              network. Live charts, run comparison, CSV export. No login wall,
+              no SaaS subscription, no &ldquo;contact sales for pricing.&rdquo;
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Link
-                href="/v3/whitelist"
-                className="inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-[15px] transition-transform hover:translate-y-[-1px]"
-                style={{ background: INK, color: BG }}
-              >
-                Request an evaluation
-                <ArrowUpRight size={16} />
-              </Link>
-              <Link
-                href="#"
-                className="inline-flex items-center gap-2 text-[15px]"
-                style={{ color: INK }}
-              >
-                Download datasheet (PDF)
-                <span style={{ color: BRAND }}>→</span>
-              </Link>
-            </div>
+            <ul className="mt-7 space-y-3 text-[14.5px]" style={{ color: INK }}>
+              {[
+                "Self-hosted, runs in a Docker container",
+                "Reads from any DCS historian via OPC UA",
+                "Per-run annotations, Jupyter export",
+                "Same dashboard the founders use in our pilot lab",
+              ].map((t) => (
+                <li key={t} className="flex gap-3">
+                  <span
+                    className="mt-2 inline-block size-1.5 rounded-full"
+                    style={{ background: BRAND }}
+                  />
+                  {t}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div
-            className="col-span-12 md:col-span-5 md:col-start-8"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            <dl
-              className="space-y-6 border-l pl-6"
-              style={{ borderColor: HAIR }}
-            >
-              <Contact label="Product inquiries" value="probe@reacgen.bio" />
-              <Contact label="Research partnerships" value="research@reacgen.bio" />
-              <Contact label="Press" value="press@reacgen.bio" />
-              <Contact label="Address" value={`1842 Industrial Way\nSouth San Francisco, CA 94080`} />
-            </dl>
-
-            <TrackedLink
-              href="http://forum.reacgen.local/"
-              ctaId="forum-v3-contact"
-              location="contact-panel"
-              className="group mt-10 flex items-start gap-4 rounded-sm border bg-white p-5 transition-colors hover:border-[rgba(47,143,102,0.5)] no-underline"
-              style={{ borderColor: HAIR }}
-            >
-              <span
-                className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full"
-                style={{ background: BG, color: BRAND, border: `1px solid ${HAIR}` }}
-              >
-                <MessagesSquare size={16} strokeWidth={1.5} />
-              </span>
-              <div className="flex-1">
-                <p
-                  className="text-[11px] tracking-[0.22em] uppercase"
-                  style={{ color: BRAND }}
-                >
-                  Community
-                </p>
-                <p
-                  className="mt-1.5 text-[15px] leading-[1.45]"
-                  style={{ color: INK, fontFamily: "var(--font-sans)", fontWeight: 500 }}
-                >
-                  Public discussion at forum.reacgen.local
-                </p>
-                <p
-                  className="mt-1 text-[13px] leading-[1.5]"
-                  style={{ color: SOFT, fontFamily: "var(--font-sans)" }}
-                >
-                  FAQs, manuals, and an open thread for engineering questions.
-                </p>
-              </div>
-              <ArrowUpRight
-                size={16}
-                className="mt-1 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                style={{ color: SOFT }}
-              />
-            </TrackedLink>
+          <div className="col-span-12 md:col-span-7">
+            <FakeChart />
           </div>
         </div>
       </div>
@@ -801,22 +583,433 @@ function CTA() {
   );
 }
 
-function Contact({ label, value }: { label: string; value: string }) {
+function FakeChart() {
+  // Sketchy hand-drawn-ish growth curve
   return (
-    <div>
-      <dt
-        className="text-[10.5px] tracking-[0.22em] uppercase"
-        style={{ color: SOFT }}
+    <div
+      className="relative aspect-[16/10] overflow-hidden rounded-2xl border"
+      style={{
+        background:
+          "linear-gradient(180deg, #ffffff 0%, #F0F6FC 100%)",
+        borderColor: HAIR,
+      }}
+    >
+      <svg
+        viewBox="0 0 800 500"
+        className="absolute inset-0 h-full w-full"
+        preserveAspectRatio="none"
       >
-        {label}
-      </dt>
-      <dd
-        className="mt-1.5 text-[14px] whitespace-pre-line"
-        style={{ color: INK }}
+        {/* gridlines */}
+        {[0, 1, 2, 3, 4].map((i) => (
+          <line
+            key={`h${i}`}
+            x1="40"
+            x2="780"
+            y1={80 + i * 80}
+            y2={80 + i * 80}
+            stroke={HAIR}
+            strokeWidth="1"
+          />
+        ))}
+        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+          <line
+            key={`v${i}`}
+            x1={40 + i * 124}
+            x2={40 + i * 124}
+            y1="80"
+            y2="400"
+            stroke={HAIR}
+            strokeWidth="1"
+          />
+        ))}
+
+        {/* growth curve */}
+        <path
+          d="M 40 390 C 120 388, 180 380, 230 360 S 320 270, 380 200 S 480 110, 560 95 S 700 95, 780 105"
+          fill="none"
+          stroke={BRAND}
+          strokeWidth="3"
+          strokeLinecap="round"
+          style={{
+            strokeDasharray: 1400,
+            animation: "rg-draw 2200ms ease-out 600ms both",
+          }}
+        />
+        {/* secondary noisy curve */}
+        <path
+          d="M 40 392 C 120 391, 180 384, 230 365 S 320 278, 380 207 S 480 118, 560 100 S 700 102, 780 112"
+          fill="none"
+          stroke={BRAND}
+          strokeOpacity="0.25"
+          strokeWidth="6"
+        />
+
+        {/* axis labels */}
+        <text x="20" y="90" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10²</text>
+        <text x="20" y="170" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10¹</text>
+        <text x="20" y="250" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁰</text>
+        <text x="14" y="330" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁻¹</text>
+        <text x="14" y="410" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁻²</text>
+
+        <text x="40" y="430" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">0h</text>
+        <text x="408" y="430" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">12h</text>
+        <text x="772" y="430" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">24h</text>
+
+        {/* phase annotation */}
+        <line x1="380" y1="200" x2="380" y2="450" stroke={INK} strokeOpacity="0.25" strokeDasharray="4 4" />
+        <text
+          x="386"
+          y="470"
+          fill={INK}
+          fontSize="12"
+          fontFamily="JetBrains Mono, monospace"
+        >
+          induction →
+        </text>
+      </svg>
+
+      <div
+        className="absolute left-5 top-5 flex items-center gap-2 text-[11px] tracking-wide"
+        style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
       >
-        {value}
-      </dd>
+        <span
+          className="inline-block size-1.5 rounded-full"
+          style={{ background: BRAND }}
+        />
+        reactor-04 · E. coli BL21 · 2026-03-12
+      </div>
+
+      <div
+        className="absolute right-5 top-5 rounded-md border px-2 py-1 text-[10.5px] tracking-wider uppercase"
+        style={{
+          borderColor: HAIR,
+          background: CARD,
+          color: INK,
+          fontFamily: "var(--font-mono)",
+        }}
+      >
+        live
+      </div>
     </div>
+  );
+}
+
+function Specs() {
+  const rows: [string, string][] = [
+    ["Wavelengths", "600 nm + 850 nm (alternating, ratiometric)"],
+    ["Process connection", "12 mm Ingold (standard) · 25 mm Ingold (option)"],
+    ["Wetted materials", "316L stainless · sapphire · EPDM o-ring"],
+    ["Operating temperature", "4 °C – 60 °C process · 134 °C SIP"],
+    ["Operating pressure", "0 – 6 bar"],
+    ["Outputs", "Modbus TCP · MQTT · 4–20 mA · REST · OPC UA"],
+    ["Power", "24 V DC · ≤ 4 W"],
+    ["Cable", "M12 8-pin · 3 m or 10 m"],
+    ["Compliance", "EHEDG · ATEX zone 2 (option) · CE · FCC"],
+    ["Warranty", "24 months · 12 months on optical window"],
+  ];
+  return (
+    <section
+      id="specs"
+      className="border-t"
+      style={{ borderColor: HAIR }}
+    >
+      <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-y-4">
+          <div>
+            <p
+              className="text-[11px] tracking-[0.2em] uppercase"
+              style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+            >
+              the specs
+            </p>
+            <h2
+              className="mt-4 tracking-[-0.025em]"
+              style={{
+                fontSize: "clamp(1.7rem, 3vw, 2.3rem)",
+                fontWeight: 600,
+                lineHeight: 1.1,
+              }}
+            >
+              Nothing buried, nothing footnoted.
+            </h2>
+          </div>
+          <Link
+            href="#"
+            className="inline-flex items-center gap-2 text-[14px]"
+            style={{ color: INK }}
+          >
+            Datasheet (PDF) <ArrowUpRight size={14} style={{ color: BRAND }} />
+          </Link>
+        </div>
+
+        <dl
+          className="mt-10 overflow-hidden rounded-2xl border bg-white"
+          style={{ borderColor: HAIR }}
+        >
+          {rows.map(([k, v], i) => (
+            <div
+              key={k}
+              className="grid grid-cols-12 gap-x-4 px-5 py-4 text-[14.5px] md:px-7"
+              style={{
+                borderTop: i === 0 ? "none" : `1px solid ${HAIR}`,
+              }}
+            >
+              <dt
+                className="col-span-12 text-[12px] tracking-[0.12em] uppercase md:col-span-4"
+                style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
+              >
+                {k}
+              </dt>
+              <dd className="col-span-12 md:col-span-8" style={{ color: INK }}>
+                {v}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+function Notebook() {
+  const posts: [string, string, string, string, React.ReactNode][] = [
+    [
+      "Why we built a probe instead of a SaaS",
+      "engineering · 8 min",
+      "We spent a year on a pure-software analytics platform. Then we realized: the limiting reagent in bioprocess monitoring isn't data, it's measurement. So we burned the SaaS and built a sensor.",
+      "Read",
+      <Beaker key="b" size={16} strokeWidth={1.75} />,
+    ],
+    [
+      "How to subtract bubble scatter without lying",
+      "science · 6 min",
+      "A 850 nm reference channel sounds simple. It isn't. Here's the math, the photodiode noise floor, and why our first three prototypes lied to us about CHO densities.",
+      "Read",
+      <CircuitBoard key="c" size={16} strokeWidth={1.75} />,
+    ],
+    [
+      "Field notes: 90 days at a CDMO pilot plant",
+      "logbook · 11 min",
+      "What broke. What didn't. A week-by-week log of running ODX-1 next to incumbent probes on six parallel 200 L runs. (Spoiler: the o-rings were the hardest part.)",
+      "Read",
+      <ShieldCheck key="s" size={16} strokeWidth={1.75} />,
+    ],
+  ];
+  return (
+    <section
+      id="notebook"
+      className="border-t"
+      style={{ borderColor: HAIR }}
+    >
+      <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-y-4">
+          <div>
+            <p
+              className="text-[11px] tracking-[0.2em] uppercase"
+              style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+            >
+              from the notebook
+            </p>
+            <h2
+              className="mt-4 tracking-[-0.025em]"
+              style={{
+                fontSize: "clamp(1.7rem, 3vw, 2.3rem)",
+                fontWeight: 600,
+                lineHeight: 1.1,
+              }}
+            >
+              We write everything down.
+            </h2>
+          </div>
+          <Link
+            href="#"
+            className="inline-flex items-center gap-2 text-[14px]"
+            style={{ color: INK }}
+          >
+            All posts <ArrowUpRight size={14} style={{ color: BRAND }} />
+          </Link>
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+          {posts.map(([title, meta, body, cta, icon]) => (
+            <Link
+              key={title}
+              href="#"
+              className="group flex h-full flex-col rounded-2xl border bg-white p-6 transition-colors hover:border-[rgba(47,127,184,0.5)]"
+              style={{ borderColor: HAIR }}
+            >
+              <span
+                className="inline-flex size-9 items-center justify-center rounded-full"
+                style={{ background: BG, color: BRAND, border: `1px solid ${HAIR}` }}
+              >
+                {icon}
+              </span>
+              <p
+                className="mt-5 text-[11px] tracking-[0.16em] uppercase"
+                style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
+              >
+                {meta}
+              </p>
+              <h3 className="mt-2 text-[1.15rem] leading-[1.25]" style={{ fontWeight: 600 }}>
+                {title}
+              </h3>
+              <p className="mt-3 flex-1 text-[14px] leading-[1.55]" style={{ color: SOFT }}>
+                {body}
+              </p>
+              <span
+                className="mt-5 inline-flex items-center gap-1.5 text-[13.5px]"
+                style={{ color: BRAND }}
+              >
+                {cta} <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Newsletter() {
+  return (
+    <section
+      id="shop"
+      className="border-t"
+      style={{ borderColor: HAIR }}
+    >
+      <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
+        <div
+          className="relative overflow-hidden rounded-3xl border p-8 md:p-14"
+          style={{
+            background: INK,
+            color: BG,
+            borderColor: INK,
+          }}
+        >
+          {/* subtle dotted bg */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.12]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, rgba(244,248,252,0.8) 1px, transparent 1px)",
+              backgroundSize: "22px 22px",
+            }}
+          />
+
+          <div className="relative grid grid-cols-12 gap-8">
+            <div className="col-span-12 md:col-span-7">
+              <p
+                className="text-[11px] tracking-[0.2em] uppercase"
+                style={{ color: HIGHLIGHT, fontFamily: "var(--font-mono)" }}
+              >
+                get one in your lab
+              </p>
+              <h2
+                className="mt-4 tracking-[-0.025em]"
+                style={{
+                  fontSize: "clamp(2rem, 4.4vw, 3.4rem)",
+                  fontWeight: 600,
+                  lineHeight: 1.02,
+                }}
+              >
+                Try it for four weeks.
+                <br />
+                Keep it if the numbers convince you.
+              </h2>
+              <p className="mt-6 max-w-lg text-[15.5px] leading-[1.55]" style={{ opacity: 0.78 }}>
+                We&apos;ll ship a calibrated ODX-1 and an engineer to install it
+                alongside your current method. You keep the run data. Pay only
+                if it earns its place.
+              </p>
+
+              <form className="mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
+                <input
+                  type="email"
+                  required
+                  placeholder="you@yourlab.org"
+                  className="flex-1 rounded-full border bg-transparent px-5 py-3 text-[14.5px] outline-none placeholder:text-white/40 focus:border-white/40"
+                  style={{ borderColor: "rgba(244,248,252,0.2)", color: BG }}
+                />
+                <Link
+                  href="/v3/whitelist"
+                  className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[14.5px] transition-transform hover:translate-y-[-1px]"
+                  style={{
+                    background: HIGHLIGHT,
+                    color: INK,
+                    fontWeight: 500,
+                  }}
+                >
+                  Reserve a unit <ArrowRight size={14} />
+                </Link>
+              </form>
+              <p
+                className="mt-3 text-[12px]"
+                style={{ color: HIGHLIGHT, fontFamily: "var(--font-mono)" }}
+              >
+                no spam · two emails a month, max · unsubscribe with one click
+              </p>
+            </div>
+
+            <aside
+              className="col-span-12 md:col-span-5 md:col-start-8"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              <TrackedLink
+                href="http://forum.reacgen.local/"
+                ctaId="forum-v3-contact"
+                location="contact-panel"
+                className="group flex items-start gap-4 rounded-2xl border p-5 transition-colors no-underline"
+                style={{ borderColor: "rgba(244,248,252,0.2)", background: "rgba(244,248,252,0.04)" }}
+              >
+                <span
+                  className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full"
+                  style={{ background: BG, color: BRAND }}
+                >
+                  <MessagesSquare size={16} strokeWidth={1.75} />
+                </span>
+                <div className="flex-1">
+                  <p className="text-[11px] tracking-[0.2em] uppercase" style={{ color: HIGHLIGHT }}>
+                    Open community
+                  </p>
+                  <p
+                    className="mt-1.5 text-[15px] leading-[1.45]"
+                    style={{ color: BG, fontFamily: "var(--font-sans)", fontWeight: 500 }}
+                  >
+                    Ask anything at forum.reacgen.local
+                  </p>
+                  <p
+                    className="mt-1 text-[13px] leading-[1.5]"
+                    style={{ opacity: 0.7, fontFamily: "var(--font-sans)" }}
+                  >
+                    Manuals, FAQs, and an open thread the engineers actually
+                    read. No ticketing system. No bots.
+                  </p>
+                </div>
+                <ArrowUpRight
+                  size={16}
+                  className="mt-1 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  style={{ color: HIGHLIGHT }}
+                />
+              </TrackedLink>
+
+              <div className="mt-6 grid grid-cols-2 gap-4 text-[12.5px]" style={{ opacity: 0.7 }}>
+                <div>
+                  <p style={{ color: HIGHLIGHT }}>SHIPPING</p>
+                  <p className="mt-1" style={{ color: BG }}>2-week lead</p>
+                  <p style={{ color: BG }}>from San Francisco</p>
+                </div>
+                <div>
+                  <p style={{ color: HIGHLIGHT }}>SUPPORT</p>
+                  <p className="mt-1" style={{ color: BG }}>probe@reacgen.bio</p>
+                  <p style={{ color: BG }}>+1 (415) 555-0119</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -827,23 +1020,18 @@ function Foot() {
       style={{ borderColor: HAIR }}
     >
       <div
-        className="mx-auto flex max-w-[80rem] flex-col gap-4 px-6 py-10 text-[13px] md:flex-row md:items-center md:justify-between md:px-10"
+        className="mx-auto flex max-w-[80rem] flex-col gap-6 px-6 py-10 text-[13px] md:flex-row md:items-center md:justify-between md:px-10"
         style={{ color: SOFT }}
       >
         <div className="flex items-center gap-3">
           <Image src="/logo-mark.png" alt="Reacgen" width={22} height={22} />
-          <span>© 2026 Reacgen Biosystems, Inc.</span>
+          <span>© 2026 Reacgen Biosystems · made in SF</span>
         </div>
-        <div className="flex items-center gap-6" style={{ fontFamily: "var(--font-mono)" }}>
-          <Link href="#" className="hover:text-[#0F1311]">
-            Privacy
-          </Link>
-          <Link href="#" className="hover:text-[#0F1311]">
-            Terms
-          </Link>
-          <Link href="/" className="hover:text-[#0F1311]">
-            ← Variants
-          </Link>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2" style={{ fontFamily: "var(--font-mono)" }}>
+          <Link href="#" className="hover:text-[#0B1F33]">privacy</Link>
+          <Link href="#" className="hover:text-[#0B1F33]">terms</Link>
+          <Link href="#" className="hover:text-[#0B1F33]">careers</Link>
+          <Link href="/" className="hover:text-[#0B1F33]">← variants</Link>
         </div>
       </div>
     </footer>

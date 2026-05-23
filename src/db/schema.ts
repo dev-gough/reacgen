@@ -56,8 +56,17 @@ export const users = pgTable(
   {
     id: uuid("id").primaryKey().defaultRandom(),
     email: text("email").notNull(),
-    firstName: text("first_name").notNull(),
-    lastName: text("last_name").notNull(),
+    // first_name / last_name are populated by the legacy waitlist form but are
+    // optional for accounts created through Better Auth (which only knows about
+    // `name`). The account dashboard falls back to `name` when these are null.
+    firstName: text("first_name"),
+    lastName: text("last_name"),
+    // Better Auth-required fields. `name` defaults to empty for legacy rows;
+    // sign-up populates it from the form. `emailVerified` mirrors the boolean
+    // Better Auth wants; we keep `emailVerifiedAt` for audit nuance.
+    name: text("name").notNull().default(""),
+    emailVerified: boolean("email_verified").notNull().default(false),
+    image: text("image"),
     phone: text("phone"),
     company: text("company"),
     jobTitle: text("job_title"),
@@ -217,8 +226,87 @@ export const stripeEvents = pgTable(
   ],
 );
 
+// ---------------------------------------------------------------------------
+// Better Auth core tables. Column names and shapes follow the Better Auth
+// "Database" spec verbatim so we don't need a `fields` map in the auth config.
+// `userId` is uuid (not text) to FK cleanly into our existing `users.id`.
+// ---------------------------------------------------------------------------
+
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    token: text("token").notNull(),
+    expiresAt: ts("expires_at").notNull(),
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    uniqueIndex("sessions_token_unique_idx").on(t.token),
+    index("sessions_user_id_idx").on(t.userId),
+  ],
+);
+
+export const accounts = pgTable(
+  "accounts",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    accountId: text("account_id").notNull(),
+    providerId: text("provider_id").notNull(),
+    accessToken: text("access_token"),
+    refreshToken: text("refresh_token"),
+    accessTokenExpiresAt: ts("access_token_expires_at"),
+    refreshTokenExpiresAt: ts("refresh_token_expires_at"),
+    scope: text("scope"),
+    idToken: text("id_token"),
+    password: text("password"),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    uniqueIndex("accounts_provider_account_unique_idx").on(
+      t.providerId,
+      t.accountId,
+    ),
+    index("accounts_user_id_idx").on(t.userId),
+  ],
+);
+
+export const verifications = pgTable(
+  "verifications",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    identifier: text("identifier").notNull(),
+    value: text("value").notNull(),
+    expiresAt: ts("expires_at").notNull(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index("verifications_identifier_idx").on(t.identifier)],
+);
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
+export type Session = typeof sessions.$inferSelect;
+export type NewSession = typeof sessions.$inferInsert;
+export type Account = typeof accounts.$inferSelect;
+export type NewAccount = typeof accounts.$inferInsert;
+export type Verification = typeof verifications.$inferSelect;
+export type NewVerification = typeof verifications.$inferInsert;
 export type Address = typeof addresses.$inferSelect;
 export type NewAddress = typeof addresses.$inferInsert;
 export type PresaleBatch = typeof presaleBatches.$inferSelect;

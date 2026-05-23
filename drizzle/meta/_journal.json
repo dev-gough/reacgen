@@ -8,6 +8,20 @@
       "when": 1779062731203,
       "tag": "0000_true_centennial",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779134944039,
+      "tag": "0001_new_fenris",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779135835043,
+      "tag": "0002_classy_spectrum",
+      "breakpoints": true
     }
   ]
 }

@@ -33,11 +33,11 @@ const mono = DM_Mono({
   display: "swap",
 });
 
-const BG = "#FAFAF6";
-const INK = "#0F1311";
-const HAIR = "#E5E5DC";
-const SOFT = "#67726B";
-const BRAND = "#2F8F66";
+const BG = "#F4F8FC";
+const INK = "#0B1F33";
+const HAIR = "#DBE6F1";
+const SOFT = "#5D7892";
+const BRAND = "#2F7FB8";
 
 export default function V3WhitelistPage() {
   const [state, formAction, pending] = useActionState<WhitelistFormState, FormData>(

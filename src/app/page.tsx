@@ -17,9 +17,9 @@ const mono = Reddit_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Reacgen — Three landing-page directions",
+  title: "Reacgen — Five landing-page directions",
   description:
-    "Compare three design directions for the Reacgen Biosystems landing page.",
+    "Compare five design directions for the Reacgen Biosystems landing page.",
 };
 
 const variants = [
@@ -44,11 +44,11 @@ const variants = [
   {
     code: "v3",
     href: "/v3",
-    name: "Clinical",
-    tagline: "Modern biotech · light, generous, refined",
-    body: "Tempus / Recursion school. Generous whitespace, tight grid, italic serif accent, restrained brand-green. For a board deck, for a partner page, for execs.",
-    palette: ["#FAFAF6", "#0F1311", "#2F8F66"],
-    fonts: "Instrument Serif · Instrument Sans · DM Mono",
+    name: "Startup",
+    tagline: "Pioreactor school · pale blue, scrappy product-led",
+    body: "Live dashboard mock, six-tile feature grid, hand-drawn squiggle under the headline, rotated 'ships from SF' sticker, inline pricing. First-person founder voice. For an audience that wants to skip the corporate intro and read the spec.",
+    palette: ["#F4F8FC", "#0B1F33", "#FFE45A"],
+    fonts: "Space Grotesk · JetBrains Mono",
   },
   {
     code: "v4",
@@ -58,6 +58,15 @@ const variants = [
     body: "Aesop / Cereal school. Sand background, umber ink, no second accent — the brand green only appears via the logo. Indented asymmetric grid, marginalia-style section labels. All-serif type, no monospace. For the customer who reads slowly.",
     palette: ["#EFE7D6", "#2C2218", "#74634F"],
     fonts: "Cormorant Garamond · Tenor Sans",
+  },
+  {
+    code: "v5",
+    href: "/v5",
+    name: "Approachable instrument",
+    tagline: "v2's content in v3's vocabulary · light blue, dark-mode ready",
+    body: "Every technical asset from v2 (live readout, cross-section schematic, 48-hour fermentation chart, M12 pinout, four-column spec sheet) rewritten in a friendly first-person voice and re-skinned in v3's pale-blue / yellow-highlight palette. Ships with the project's only working dark mode toggle.",
+    palette: ["#ECF2F8", "#0B1F33", "#F0D247"],
+    fonts: "Space Grotesk · JetBrains Mono",
   },
 ];
 
@@ -77,7 +86,7 @@ export default function IndexPage() {
       }}
     >
       <header
-        className="mx-auto flex max-w-[78rem] items-center justify-between px-6 pt-8 md:px-12"
+        className="mx-auto flex max-w-[96rem] items-center justify-between px-6 pt-8 md:px-12"
         style={{ animation: "rg-fade-in 600ms ease-out both" }}
       >
         <div className="flex items-center gap-3">
@@ -99,7 +108,7 @@ export default function IndexPage() {
         </span>
       </header>
 
-      <section className="mx-auto max-w-[78rem] px-6 pt-20 pb-12 md:px-12 md:pt-32">
+      <section className="mx-auto max-w-[96rem] px-6 pt-20 pb-12 md:px-12 md:pt-32">
         <p
           className="text-[11px] tracking-[0.28em] uppercase"
           style={{
@@ -108,7 +117,7 @@ export default function IndexPage() {
             animation: "rg-fade-up 700ms ease-out 80ms both",
           }}
         >
-          Three directions
+          Five directions
         </p>
         <h1
           className="mt-6 max-w-3xl leading-[1] tracking-[-0.025em]"
@@ -118,7 +127,7 @@ export default function IndexPage() {
             animation: "rg-fade-up 800ms ease-out 200ms both",
           }}
         >
-          Three landing-page directions for the ODX-1 optical density sensor.
+          Five landing-page directions for the ODX-1 optical density sensor.
         </h1>
         <p
           className="mt-8 max-w-2xl text-[1.05rem] leading-[1.6]"
@@ -134,9 +143,9 @@ export default function IndexPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[78rem] px-6 pb-32 md:px-12">
+      <section className="mx-auto max-w-[96rem] px-6 pb-32 md:px-12">
         <ul
-          className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-sm border md:grid-cols-2 lg:grid-cols-4"
+          className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-sm border md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
           style={{ borderColor: "#1A1A1A", background: "#1A1A1A" }}
         >
           {variants.map((v, i) => (
@@ -212,7 +221,7 @@ export default function IndexPage() {
       </section>
 
       <footer
-        className="mx-auto flex max-w-[78rem] flex-col gap-3 px-6 pb-12 text-[11px] tracking-[0.18em] uppercase md:flex-row md:items-center md:justify-between md:px-12"
+        className="mx-auto flex max-w-[96rem] flex-col gap-3 px-6 pb-12 text-[11px] tracking-[0.18em] uppercase md:flex-row md:items-center md:justify-between md:px-12"
         style={{ color: MUTED, fontFamily: "var(--font-mono)" }}
       >
         <span>© 2026 Reacgen Biosystems</span>

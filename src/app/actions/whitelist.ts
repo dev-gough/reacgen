@@ -3,6 +3,7 @@
 import { and, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db, schema } from "@/db";
+import { getCurrentUser } from "@/lib/session";
 
 const { users, addresses, presaleBatches, whitelistEntries } = schema;
 
@@ -105,6 +106,7 @@ export async function submitWhitelist(
 
   const input = parsed.data;
   const email = input.email.toLowerCase();
+  const currentUser = await getCurrentUser();
 
   try {
     const result = await db.transaction(async (tx) => {
@@ -121,15 +123,12 @@ export async function submitWhitelist(
         return { kind: "no_batch" as const };
       }
 
-      const existing = await tx
-        .select({ id: users.id })
-        .from(users)
-        .where(sql`lower(${users.email}) = ${email}`)
-        .limit(1);
-
+      // Signed-in users always attach the entry to their account row, ignoring
+      // whatever email is in the form. Anonymous submissions fall back to the
+      // legacy upsert-by-email path so existing landing-page flows keep working.
       let userId: string;
-      if (existing[0]) {
-        userId = existing[0].id;
+      if (currentUser) {
+        userId = currentUser.id;
         await tx
           .update(users)
           .set({
@@ -142,18 +141,39 @@ export async function submitWhitelist(
           })
           .where(eq(users.id, userId));
       } else {
-        const [u] = await tx
-          .insert(users)
-          .values({
-            email,
-            firstName: input.firstName,
-            lastName: input.lastName,
-            company: input.company,
-            jobTitle: input.jobTitle,
-            phone: input.phone,
-          })
-          .returning({ id: users.id });
-        userId = u.id;
+        const existing = await tx
+          .select({ id: users.id })
+          .from(users)
+          .where(sql`lower(${users.email}) = ${email}`)
+          .limit(1);
+
+        if (existing[0]) {
+          userId = existing[0].id;
+          await tx
+            .update(users)
+            .set({
+              firstName: input.firstName,
+              lastName: input.lastName,
+              company: input.company,
+              jobTitle: input.jobTitle,
+              phone: input.phone,
+              updatedAt: new Date(),
+            })
+            .where(eq(users.id, userId));
+        } else {
+          const [u] = await tx
+            .insert(users)
+            .values({
+              email,
+              firstName: input.firstName,
+              lastName: input.lastName,
+              company: input.company,
+              jobTitle: input.jobTitle,
+              phone: input.phone,
+            })
+            .returning({ id: users.id });
+          userId = u.id;
+        }
       }
 
       if (input.line1 && input.city && input.postalCode && input.country) {

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Cormorant_Garamond, Tenor_Sans } from "next/font/google";
 import { TrackedLink } from "@/components/TrackedLink";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const display = Cormorant_Garamond({
   subsets: ["latin"],
@@ -105,6 +106,16 @@ function Nav() {
         >
           Contact
         </Link>
+        <Link
+          href="/v4/account"
+          className="hover:text-[#2C2218] transition-colors"
+        >
+          Account
+        </Link>
+        <ThemeToggle
+          className="inline-flex items-center transition-colors hover:text-[#2C2218]"
+          size={12}
+        />
       </div>
     </nav>
   );

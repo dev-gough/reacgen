@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fraunces, Newsreader, Fragment_Mono } from "next/font/google";
 import { TrackedLink } from "@/components/TrackedLink";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -109,6 +110,18 @@ function Masthead() {
           Letters
           <span aria-hidden style={{ color: GREEN }}>→</span>
         </TrackedLink>
+        <Link
+          href="/v1/account"
+          className="inline-flex items-baseline gap-1.5 transition-opacity hover:opacity-60"
+        >
+          Account
+          <span aria-hidden style={{ color: GREEN }}>§</span>
+        </Link>
+        <ThemeToggle
+          className="inline-flex items-center transition-opacity hover:opacity-60"
+          style={{ color: GREEN }}
+          size={13}
+        />
       </div>
     </header>
   );

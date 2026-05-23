@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { TrackedLink } from "@/components/TrackedLink";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Major_Mono_Display } from "next/font/google";
 
 const display = Major_Mono_Display({
@@ -109,6 +110,18 @@ function StatusBar() {
         >
           // community
         </TrackedLink>
+        <Link
+          href="/v2/account"
+          className="inline-flex items-center gap-1.5 transition-colors hover:text-[#7CFFAE]"
+          style={{ color: BRAND }}
+        >
+          // account
+        </Link>
+        <ThemeToggle
+          className="inline-flex items-center transition-colors hover:text-[#7CFFAE]"
+          style={{ color: BRAND }}
+          size={13}
+        />
         <div className="flex items-center gap-2">
           <span
             className="inline-block size-2 rounded-full"
