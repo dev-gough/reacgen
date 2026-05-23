@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" role="img" aria-label="Reacgen — five landing-page directions for the ODX-1 optical density sensor">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A0A0A"/>
+      <stop offset="1" stop-color="#11161A"/>
+    </linearGradient>
+    <linearGradient id="curve" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3DA478" stop-opacity="0"/>
+      <stop offset="0.15" stop-color="#3DA478" stop-opacity="1"/>
+      <stop offset="1" stop-color="#7CFFAE" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3DA478" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#3DA478" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1A1F23" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="360" fill="url(#bg)"/>
+  <rect width="1280" height="360" fill="url(#grid)" opacity="0.6"/>
+
+  <g transform="translate(64 64)">
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="3.2" fill="#3DA478">
+      <text>REACGEN BIOSYSTEMS · ODX-1</text>
+    </g>
+
+    <text x="-6" y="120" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" font-size="120" font-weight="500" letter-spacing="-4" fill="#EDECE6">reacgen</text>
+
+    <text y="170" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" font-size="18" fill="#7B7B77">
+      Five landing-page directions for an optical density sensor.
+    </text>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.6" fill="#7B7B77" transform="translate(0 220)">
+      <g><circle cx="6" cy="-3" r="6" fill="#F3EDE0"/><text x="20" y="0">V1 · EDITORIAL</text></g>
+      <g transform="translate(160 0)"><circle cx="6" cy="-3" r="6" fill="#06080A" stroke="#3DA478"/><text x="20" y="0">V2 · INSTRUMENT</text></g>
+      <g transform="translate(330 0)"><circle cx="6" cy="-3" r="6" fill="#F4F8FC"/><text x="20" y="0">V3 · STARTUP</text></g>
+      <g transform="translate(475 0)"><circle cx="6" cy="-3" r="6" fill="#EFE7D6"/><text x="20" y="0">V4 · QUIET</text></g>
+      <g transform="translate(605 0)"><circle cx="6" cy="-3" r="6" fill="#ECF2F8"/><text x="20" y="0">V5 · APPROACHABLE</text></g>
+    </g>
+  </g>
+
+  <g transform="translate(760 60)">
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.6" fill="#7B7B77">
+      <text x="0" y="-8">OD₆₀₀ · 48-HOUR FERMENTATION</text>
+      <text x="440" y="-8" text-anchor="end" fill="#3DA478">LIVE</text>
+    </g>
+
+    <rect x="0" y="0" width="440" height="180" fill="none" stroke="#1A1F23"/>
+
+    <g stroke="#1A1F23" stroke-width="1" stroke-dasharray="2 4">
+      <line x1="0" y1="45" x2="440" y2="45"/>
+      <line x1="0" y1="90" x2="440" y2="90"/>
+      <line x1="0" y1="135" x2="440" y2="135"/>
+    </g>
+
+    <path d="M0 175 C 90 174, 150 168, 200 130 S 320 30, 440 18 L 440 180 L 0 180 Z" fill="url(#fill)"/>
+    <path d="M0 175 C 90 174, 150 168, 200 130 S 320 30, 440 18" fill="none" stroke="url(#curve)" stroke-width="2.5" stroke-linecap="round"/>
+
+    <g>
+      <circle cx="440" cy="18" r="4" fill="#7CFFAE"/>
+      <circle cx="440" cy="18" r="9" fill="none" stroke="#7CFFAE" stroke-opacity="0.4"/>
+    </g>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#7B7B77">
+      <text x="0" y="200">0h</text>
+      <text x="220" y="200" text-anchor="middle">24h</text>
+      <text x="440" y="200" text-anchor="end">48h</text>
+    </g>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#EDECE6" transform="translate(0 240)">
+      <text>OD <tspan fill="#7CFFAE" font-size="14">2.41</tspan>  ·  µ <tspan fill="#EDECE6">0.38 h⁻¹</tspan>  ·  τ <tspan fill="#EDECE6">1.82 h</tspan></text>
+    </g>
+  </g>
+
+  <g transform="translate(64 320)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="2" fill="#3A3A38">
+    <text>NEXT 16 · TYPESCRIPT · TAILWIND 4 · DRIZZLE · BETTER-AUTH</text>
+  </g>
+</svg>

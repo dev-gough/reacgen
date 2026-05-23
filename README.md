@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <img src=".github/header.svg" alt="Reacgen — five landing-page directions for the ODX-1 optical density sensor" width="100%">
+</p>
 
-## Getting Started
+<p align="center">
+  <a href="#"><img src="https://img.shields.io/badge/next-16-000?style=flat-square&labelColor=000" alt="Next 16"></a>
+  <a href="#"><img src="https://img.shields.io/badge/typescript-5-3178C6?style=flat-square&labelColor=000" alt="TypeScript"></a>
+  <a href="#"><img src="https://img.shields.io/badge/tailwind-4-38BDF8?style=flat-square&labelColor=000" alt="Tailwind 4"></a>
+  <a href="#"><img src="https://img.shields.io/badge/drizzle-orm-C5F74F?style=flat-square&labelColor=000" alt="Drizzle"></a>
+</p>
 
-First, run the development server:
+---
+
+Five concurrent landing-page directions for the **ODX-1 optical density sensor** — same product story, five readers, five typographic voices.
+
+## The five directions
+
+| | route | tone | palette |
+|---|---|---|---|
+| **v1** | [`/v1`](src/app/v1) | Editorial · scientific journal | sand, ink, viridian |
+| **v2** | [`/v2`](src/app/v2) | Instrument · engineer-to-engineer | jet, mint, neon |
+| **v3** | [`/v3`](src/app/v3) | Startup · pale blue, scrappy | ice, navy, sun |
+| **v4** | [`/v4`](src/app/v4) | Quiet · monochrome warm | clay, umber, dune |
+| **v5** | [`/v5`](src/app/v5) | Approachable instrument · v2 content in v3 voice (only dark-mode toggle) | mist, navy, sun |
+
+The index at [`/`](src/app/page.tsx) shows all five side-by-side.
+
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`Next 16` · `React 19` · `TypeScript` · `Tailwind 4` · `Drizzle ORM` · `better-auth`
