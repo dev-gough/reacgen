@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Cormorant_Garamond, Tenor_Sans } from "next/font/google";
 import { TrackedLink } from "@/components/TrackedLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useV4Palette } from "@/lib/theme";
 
 const display = Cormorant_Garamond({
   subsets: ["latin"],
@@ -20,26 +22,14 @@ const sans = Tenor_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Reacgen ODX-1 — A quiet instrument for cell density",
-  description:
-    "A single instrument that reads cell density inside your bioreactor, fifty times a second.",
-};
-
-// Monochrome warm palette. Brand green appears only via the logo image.
-const BG = "#EFE7D6";
-const LIGHT = "#F4EDDD";
-const INK = "#2C2218";
-const INK_SOFT = "#74634F";
-const HAIR = "#D7CDB9";
-
 export default function V4Page() {
+  const p = useV4Palette();
   return (
     <div
       className={`${display.variable} ${sans.variable} min-h-screen`}
       style={{
-        background: BG,
-        color: INK,
+        background: p.bg,
+        color: p.ink,
         fontFamily: "var(--font-display)",
       }}
     >
@@ -56,6 +46,7 @@ export default function V4Page() {
 }
 
 function Nav() {
+  const p = useV4Palette();
   return (
     <nav
       className="mx-auto flex max-w-[72rem] items-center justify-between px-6 py-8 md:px-12 md:py-10"
@@ -79,16 +70,19 @@ function Nav() {
 
       <div
         className="flex items-center gap-8 text-[11px]"
-        style={{
-          fontFamily: "var(--font-sans)",
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          color: INK_SOFT,
-        }}
+        style={
+          {
+            fontFamily: "var(--font-sans)",
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: p.inkSoft,
+            "--v4-hover-fg": p.ink,
+          } as React.CSSProperties
+        }
       >
         <Link
           href="#instrument"
-          className="hover:text-[#2C2218] transition-colors"
+          className="hover:text-[var(--v4-hover-fg)] transition-colors"
         >
           Instrument
         </Link>
@@ -96,24 +90,24 @@ function Nav() {
           href="http://forum.reacgen.local/"
           ctaId="forum-v4-nav"
           location="nav"
-          className="hover:text-[#2C2218] transition-colors"
+          className="hover:text-[var(--v4-hover-fg)] transition-colors"
         >
           Letters
         </TrackedLink>
         <Link
           href="#contact"
-          className="hover:text-[#2C2218] transition-colors"
+          className="hover:text-[var(--v4-hover-fg)] transition-colors"
         >
           Contact
         </Link>
         <Link
           href="/v4/account"
-          className="hover:text-[#2C2218] transition-colors"
+          className="hover:text-[var(--v4-hover-fg)] transition-colors"
         >
           Account
         </Link>
         <ThemeToggle
-          className="inline-flex items-center transition-colors hover:text-[#2C2218]"
+          className="inline-flex items-center transition-colors hover:text-[var(--v4-hover-fg)]"
           size={12}
         />
       </div>
@@ -122,6 +116,7 @@ function Nav() {
 }
 
 function Hero() {
+  const p = useV4Palette();
   return (
     <section className="mx-auto max-w-[72rem] px-6 pt-24 pb-32 md:px-12 md:pt-40 md:pb-48">
       <div className="grid grid-cols-12 gap-x-8 gap-y-12">
@@ -150,12 +145,12 @@ function Hero() {
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 400,
-              color: INK_SOFT,
+              color: p.inkSoft,
               animation: "rg-fade-up 1200ms ease-out 340ms both",
             }}
           >
             It reads cell density inside your bioreactor —{" "}
-            <em style={{ fontStyle: "italic", color: INK }}>
+            <em style={{ fontStyle: "italic", color: p.ink }}>
               fifty times a second, three hundred steam cycles long.
             </em>
           </p>
@@ -172,8 +167,8 @@ function Hero() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 400,
-                color: INK,
-                borderColor: INK,
+                color: p.ink,
+                borderColor: p.ink,
               }}
             >
               Request an evaluation
@@ -191,7 +186,7 @@ function Hero() {
                 fontFamily: "var(--font-sans)",
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
-                color: INK_SOFT,
+                color: p.inkSoft,
               }}
             >
               About the instrument
@@ -204,11 +199,12 @@ function Hero() {
 }
 
 function Product() {
+  const p = useV4Palette();
   return (
     <section
       id="instrument"
       className="mx-auto max-w-[72rem] border-t px-6 py-24 md:px-12 md:py-32"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="grid grid-cols-12 gap-x-8 gap-y-12">
         <div className="col-span-12 md:col-span-1">
@@ -229,7 +225,7 @@ function Product() {
 
           <p
             className="mt-8 text-[1.15rem] leading-[1.6]"
-            style={{ color: INK_SOFT }}
+            style={{ color: p.inkSoft }}
           >
             A single dual-wavelength probe. Sapphire window, 316L body. It
             mounts into the Ingold port on your reactor and stays there —
@@ -238,10 +234,10 @@ function Product() {
 
           <p
             className="mt-4 text-[1.15rem] leading-[1.6]"
-            style={{ color: INK_SOFT }}
+            style={{ color: p.inkSoft }}
           >
             We have made the same instrument for four years.{" "}
-            <em style={{ fontStyle: "italic", color: INK }}>
+            <em style={{ fontStyle: "italic", color: p.ink }}>
               It is the only thing we sell.
             </em>
           </p>
@@ -250,7 +246,7 @@ function Product() {
         <div className="col-span-12 md:col-span-5 md:col-start-8">
           <div
             className="relative aspect-square overflow-hidden"
-            style={{ background: LIGHT, animation: "rg-fade-in 1400ms ease-out 200ms both" }}
+            style={{ background: p.light, animation: "rg-fade-in 1400ms ease-out 200ms both" }}
           >
             <Image
               src="/logo-mark.png"
@@ -266,7 +262,7 @@ function Product() {
               fontFamily: "var(--font-sans)",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
-              color: INK_SOFT,
+              color: p.inkSoft,
             }}
           >
             ODX-1 · front
@@ -278,6 +274,7 @@ function Product() {
 }
 
 function Behavior() {
+  const p = useV4Palette();
   const points: { kicker: string; body: string }[] = [
     {
       kicker: "It measures",
@@ -296,7 +293,7 @@ function Behavior() {
   return (
     <section
       className="mx-auto max-w-[72rem] border-t px-6 py-24 md:px-12 md:py-32"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="grid grid-cols-12 gap-x-8 gap-y-16">
         <div className="col-span-12 md:col-span-1">
@@ -316,15 +313,15 @@ function Behavior() {
           </h2>
 
           <ol className="grid grid-cols-1 gap-y-14 md:grid-cols-3 md:gap-x-12 md:gap-y-0">
-            {points.map((p, i) => (
-              <li key={p.kicker}>
+            {points.map((pt, i) => (
+              <li key={pt.kicker}>
                 <span
                   className="text-[11px]"
                   style={{
                     fontFamily: "var(--font-sans)",
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
-                    color: INK_SOFT,
+                    color: p.inkSoft,
                   }}
                 >
                   {String(i + 1).padStart(2, "0")}
@@ -336,13 +333,13 @@ function Behavior() {
                     fontWeight: 500,
                   }}
                 >
-                  {p.kicker}
+                  {pt.kicker}
                 </p>
                 <p
                   className="mt-4 text-[1.05rem] leading-[1.6]"
-                  style={{ color: INK_SOFT }}
+                  style={{ color: p.inkSoft }}
                 >
-                  {p.body}
+                  {pt.body}
                 </p>
               </li>
             ))}
@@ -354,6 +351,7 @@ function Behavior() {
 }
 
 function Specifications() {
+  const p = useV4Palette();
   const rows: [string, string][] = [
     ["Range", "0.001 – 200 OD"],
     ["Accuracy", "± 0.5% of reading"],
@@ -367,7 +365,7 @@ function Specifications() {
   return (
     <section
       className="mx-auto max-w-[72rem] border-t px-6 py-24 md:px-12 md:py-32"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="grid grid-cols-12 gap-x-8 gap-y-12">
         <div className="col-span-12 md:col-span-1">
@@ -393,8 +391,8 @@ function Specifications() {
               key={k}
               className="grid grid-cols-2 items-baseline gap-x-6 py-5"
               style={{
-                borderTop: i === 0 ? `1px solid ${HAIR}` : "none",
-                borderBottom: `1px solid ${HAIR}`,
+                borderTop: i === 0 ? `1px solid ${p.hair}` : "none",
+                borderBottom: `1px solid ${p.hair}`,
               }}
             >
               <dt
@@ -403,7 +401,7 @@ function Specifications() {
                   fontFamily: "var(--font-sans)",
                   letterSpacing: "0.22em",
                   textTransform: "uppercase",
-                  color: INK_SOFT,
+                  color: p.inkSoft,
                 }}
               >
                 {k}
@@ -426,6 +424,7 @@ function Specifications() {
 }
 
 function BuiltWith() {
+  const p = useV4Palette();
   const partners = [
     "Stanford Bioengineering",
     "ETH Zürich",
@@ -438,7 +437,7 @@ function BuiltWith() {
   return (
     <section
       className="mx-auto max-w-[72rem] border-t px-6 py-24 md:px-12 md:py-32"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="grid grid-cols-12 gap-x-8 gap-y-12">
         <div className="col-span-12 md:col-span-1">
@@ -461,13 +460,13 @@ function BuiltWith() {
             className="mt-12 grid grid-cols-2 gap-y-5 md:grid-cols-3 md:gap-y-7"
             style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
           >
-            {partners.map((p) => (
+            {partners.map((name) => (
               <li
-                key={p}
+                key={name}
                 className="text-[1.15rem]"
-                style={{ color: INK }}
+                style={{ color: p.ink }}
               >
-                {p}
+                {name}
               </li>
             ))}
           </ul>
@@ -476,7 +475,7 @@ function BuiltWith() {
             className="mt-16 max-w-2xl text-[1rem] italic leading-[1.6]"
             style={{
               fontFamily: "var(--font-display)",
-              color: INK_SOFT,
+              color: p.inkSoft,
               fontStyle: "italic",
             }}
           >
@@ -490,11 +489,12 @@ function BuiltWith() {
 }
 
 function CallToAction() {
+  const p = useV4Palette();
   return (
     <section
       id="contact"
       className="mx-auto max-w-[72rem] border-t px-6 py-32 md:px-12 md:py-48"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="grid grid-cols-12 gap-x-8 gap-y-12">
         <div className="col-span-12 md:col-span-1">
@@ -515,7 +515,7 @@ function CallToAction() {
 
           <p
             className="mt-8 max-w-xl text-[1.2rem] leading-[1.55]"
-            style={{ color: INK_SOFT }}
+            style={{ color: p.inkSoft }}
           >
             We send one calibrated unit and a process engineer for the
             installation. Four weeks, alongside whatever you use today. You
@@ -530,8 +530,8 @@ function CallToAction() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 400,
-                color: INK,
-                borderColor: INK,
+                color: p.ink,
+                borderColor: p.ink,
               }}
             >
               Request an evaluation
@@ -550,7 +550,7 @@ function CallToAction() {
                 fontFamily: "var(--font-sans)",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                color: INK_SOFT,
+                color: p.inkSoft,
               }}
             >
               probe@reacgen.bio
@@ -563,6 +563,7 @@ function CallToAction() {
 }
 
 function Marginalia({ label }: { label: string }) {
+  const p = useV4Palette();
   return (
     <span
       className="block text-[11px]"
@@ -570,7 +571,7 @@ function Marginalia({ label }: { label: string }) {
         fontFamily: "var(--font-sans)",
         letterSpacing: "0.22em",
         textTransform: "uppercase",
-        color: INK_SOFT,
+        color: p.inkSoft,
       }}
     >
       {label}
@@ -579,10 +580,11 @@ function Marginalia({ label }: { label: string }) {
 }
 
 function Foot() {
+  const p = useV4Palette();
   return (
     <footer
       className="border-t"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="mx-auto flex max-w-[72rem] flex-col gap-4 px-6 py-12 md:flex-row md:items-baseline md:justify-between md:px-12">
         <div className="flex items-baseline gap-3">
@@ -591,7 +593,7 @@ function Foot() {
             className="text-[14px]"
             style={{
               fontFamily: "var(--font-display)",
-              color: INK_SOFT,
+              color: p.inkSoft,
             }}
           >
             Reacgen Biosystems · 2026
@@ -600,24 +602,27 @@ function Foot() {
 
         <div
           className="flex items-baseline gap-8 text-[11px]"
-          style={{
-            fontFamily: "var(--font-sans)",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: INK_SOFT,
-          }}
+          style={
+            {
+              fontFamily: "var(--font-sans)",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: p.inkSoft,
+              "--v4-hover-fg": p.ink,
+            } as React.CSSProperties
+          }
         >
           <TrackedLink
             href="http://forum.reacgen.local/"
             ctaId="forum-v4-footer"
             location="footer"
-            className="hover:text-[#2C2218] transition-colors"
+            className="hover:text-[var(--v4-hover-fg)] transition-colors"
           >
             Forum
           </TrackedLink>
           <Link
             href="/"
-            className="hover:text-[#2C2218] transition-colors"
+            className="hover:text-[var(--v4-hover-fg)] transition-colors"
           >
             ← Variants
           </Link>

@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
@@ -21,6 +22,7 @@ import {
 } from "lucide-react";
 import { TrackedLink } from "@/components/TrackedLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useV3Palette, type V3Palette } from "@/lib/theme";
 
 const sans = Space_Grotesk({
   subsets: ["latin"],
@@ -36,27 +38,14 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Reacgen ODX-1 — Continuous optical density, on every reactor",
-  description:
-    "Plug-in optical density for bioreactors. Real-time OD at 50 Hz, no sampling, no drift. Ships from San Francisco.",
-};
-
-const BG = "#F4F8FC";
-const INK = "#0B1F33";
-const HAIR = "#DBE6F1";
-const SOFT = "#5D7892";
-const BRAND = "#2F7FB8";
-const HIGHLIGHT = "#FFE45A";
-const CARD = "#FFFFFF";
-
 export default function V3Page() {
+  const p = useV3Palette();
   return (
     <div
       className={`${sans.variable} ${mono.variable} min-h-screen`}
       style={{
-        background: BG,
-        color: INK,
+        background: p.bg,
+        color: p.ink,
         fontFamily: "var(--font-sans)",
       }}
     >
@@ -75,19 +64,20 @@ export default function V3Page() {
 }
 
 function Banner() {
+  const p = useV3Palette();
   return (
     <div
       className="w-full border-b text-center text-[12.5px]"
       style={{
-        background: INK,
-        color: BG,
-        borderColor: INK,
+        background: p.ink,
+        color: p.bg,
+        borderColor: p.ink,
         fontFamily: "var(--font-mono)",
         animation: "rg-fade-in 500ms ease-out both",
       }}
     >
       <div className="mx-auto flex max-w-[80rem] flex-wrap items-center justify-center gap-x-3 gap-y-1 px-6 py-2.5">
-        <span style={{ color: HIGHLIGHT }}>● </span>
+        <span style={{ color: p.highlight }}>● </span>
         <span>Now shipping v0.4 — 2-week lead time from San Francisco.</span>
         <Link href="#shop" className="underline underline-offset-2 opacity-80 hover:opacity-100">
           See what&apos;s in the box →
@@ -98,6 +88,7 @@ function Banner() {
 }
 
 function Nav() {
+  const p = useV3Palette();
   return (
     <nav
       className="mx-auto flex max-w-[80rem] items-center justify-between px-6 py-5 md:px-10"
@@ -111,8 +102,8 @@ function Nav() {
         <span
           className="ml-1.5 hidden rounded-full px-2 py-0.5 text-[10px] tracking-wider uppercase sm:inline"
           style={{
-            background: HIGHLIGHT,
-            color: INK,
+            background: p.highlight,
+            color: p.ink,
             fontFamily: "var(--font-mono)",
             fontWeight: 500,
           }}
@@ -123,25 +114,30 @@ function Nav() {
 
       <div
         className="hidden items-center gap-7 text-[14px] md:flex"
-        style={{ color: SOFT }}
+        style={
+          {
+            color: p.soft,
+            "--v3-nav-hover": p.ink,
+          } as React.CSSProperties
+        }
       >
-        <Link href="#shop" className="hover:text-[#0B1F33] transition-colors">
+        <Link href="#shop" className="hover:text-[var(--v3-nav-hover)] transition-colors">
           Shop
         </Link>
-        <Link href="#how" className="hover:text-[#0B1F33] transition-colors">
+        <Link href="#how" className="hover:text-[var(--v3-nav-hover)] transition-colors">
           How it works
         </Link>
-        <Link href="#specs" className="hover:text-[#0B1F33] transition-colors">
+        <Link href="#specs" className="hover:text-[var(--v3-nav-hover)] transition-colors">
           Specs
         </Link>
-        <Link href="#notebook" className="hover:text-[#0B1F33] transition-colors">
+        <Link href="#notebook" className="hover:text-[var(--v3-nav-hover)] transition-colors">
           Notebook
         </Link>
         <TrackedLink
           href="http://forum.reacgen.local/"
           ctaId="forum-v3-nav"
           location="nav"
-          className="inline-flex items-center gap-1 hover:text-[#0B1F33] transition-colors"
+          className="inline-flex items-center gap-1 hover:text-[var(--v3-nav-hover)] transition-colors"
         >
           Forum
           <MessagesSquare size={13} strokeWidth={1.75} />
@@ -150,17 +146,27 @@ function Nav() {
 
       <div className="flex items-center gap-2">
         <ThemeToggle
-          className="inline-flex size-9 items-center justify-center rounded-full border transition-colors hover:bg-white"
-          style={{ borderColor: HAIR, color: INK, background: "transparent" }}
+          className="inline-flex size-9 items-center justify-center rounded-full border transition-colors hover:bg-[var(--v3-hover-bg)]"
+          style={
+            {
+              borderColor: p.hair,
+              color: p.ink,
+              background: "transparent",
+              "--v3-hover-bg": p.card,
+            } as React.CSSProperties
+          }
         />
         <Link
           href="/v3/account"
-          className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] transition-colors hover:bg-white"
-          style={{
-            background: "transparent",
-            color: INK,
-            borderColor: HAIR,
-          }}
+          className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] transition-colors hover:bg-[var(--v3-hover-bg)]"
+          style={
+            {
+              background: "transparent",
+              color: p.ink,
+              borderColor: p.hair,
+              "--v3-hover-bg": p.card,
+            } as React.CSSProperties
+          }
         >
           <UserRound size={14} strokeWidth={1.75} />
           <span className="hidden sm:inline">Account</span>
@@ -169,9 +175,9 @@ function Nav() {
           href="#shop"
           className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] transition-transform hover:translate-y-[-1px]"
           style={{
-            background: INK,
-            color: BG,
-            borderColor: INK,
+            background: p.ink,
+            color: p.bg,
+            borderColor: p.ink,
             fontWeight: 500,
           }}
         >
@@ -184,13 +190,14 @@ function Nav() {
 }
 
 function Hero() {
+  const p = useV3Palette();
   return (
     <section className="relative mx-auto max-w-[80rem] px-6 pt-10 pb-20 md:px-10 md:pt-16 md:pb-28">
       {/* margin note, top right */}
       <p
         className="absolute right-6 top-12 hidden max-w-[180px] rotate-[3deg] text-right text-[12px] leading-snug md:block md:right-10"
         style={{
-          color: SOFT,
+          color: p.soft,
           fontFamily: "var(--font-mono)",
           animation: "rg-fade-up 1000ms ease-out 900ms both",
         }}
@@ -205,14 +212,14 @@ function Hero() {
       <p
         className="mb-7 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] tracking-wide"
         style={{
-          color: SOFT,
-          borderColor: HAIR,
-          background: CARD,
+          color: p.soft,
+          borderColor: p.hair,
+          background: p.card,
           fontFamily: "var(--font-mono)",
           animation: "rg-fade-up 700ms ease-out 80ms both",
         }}
       >
-        <Sparkles size={11} strokeWidth={2} style={{ color: BRAND }} />
+        <Sparkles size={11} strokeWidth={2} style={{ color: p.brand }} />
         For fermentation teams who hate pulling samples.
       </p>
 
@@ -239,7 +246,7 @@ function Hero() {
       <p
         className="mt-9 max-w-[40rem] text-[1.15rem] leading-[1.5]"
         style={{
-          color: SOFT,
+          color: p.soft,
           animation: "rg-fade-up 800ms ease-out 360ms both",
         }}
       >
@@ -256,8 +263,8 @@ function Hero() {
           href="/v3/whitelist"
           className="group inline-flex items-center gap-3 rounded-full px-6 py-3.5 text-[15px] transition-transform hover:translate-y-[-1px]"
           style={{
-            background: INK,
-            color: BG,
+            background: p.ink,
+            color: p.bg,
             fontWeight: 500,
           }}
         >
@@ -266,8 +273,8 @@ function Hero() {
           <span
             className="hidden rounded-full px-2 py-0.5 text-[11.5px] sm:inline"
             style={{
-              background: "rgba(255,228,90,0.95)",
-              color: INK,
+              background: p.highlightSoft,
+              color: p.ink,
               fontFamily: "var(--font-mono)",
             }}
           >
@@ -277,15 +284,18 @@ function Hero() {
         </Link>
         <Link
           href="#how"
-          className="inline-flex items-center gap-2 rounded-full border px-5 py-3.5 text-[14.5px] transition-colors hover:bg-white"
-          style={{
-            borderColor: HAIR,
-            color: INK,
-            background: "transparent",
-          }}
+          className="inline-flex items-center gap-2 rounded-full border px-5 py-3.5 text-[14.5px] transition-colors hover:bg-[var(--v3-hover-bg)]"
+          style={
+            {
+              borderColor: p.hair,
+              color: p.ink,
+              background: "transparent",
+              "--v3-hover-bg": p.card,
+            } as React.CSSProperties
+          }
         >
           See how it works
-          <ArrowRight size={14} strokeWidth={1.75} style={{ color: BRAND }} />
+          <ArrowRight size={14} strokeWidth={1.75} style={{ color: p.brand }} />
         </Link>
       </div>
 
@@ -298,9 +308,8 @@ function Hero() {
           <div
             className="relative aspect-[16/10] overflow-hidden rounded-2xl border"
             style={{
-              background:
-                "radial-gradient(ellipse at 30% 25%, #ffffff 0%, #E8F1FA 55%, #C9DCEE 100%)",
-              borderColor: HAIR,
+              background: `radial-gradient(ellipse at 30% 25%, ${p.card} 0%, ${p.cardCool} 55%, ${p.hairSoft} 100%)`,
+              borderColor: p.hair,
             }}
           >
             <Image
@@ -314,22 +323,22 @@ function Hero() {
             {/* hand-drawn-ish callouts */}
             <div
               className="absolute left-6 top-6 max-w-[200px] text-[11px] leading-snug"
-              style={{ color: INK, fontFamily: "var(--font-mono)" }}
+              style={{ color: p.ink, fontFamily: "var(--font-mono)" }}
             >
               <span
                 className="inline-block rounded-full px-2 py-0.5"
-                style={{ background: HIGHLIGHT }}
+                style={{ background: p.highlight }}
               >
                 01 · 12 mm Ingold thread
               </span>
             </div>
             <div
               className="absolute right-6 bottom-6 max-w-[200px] text-right text-[11px] leading-snug"
-              style={{ color: INK, fontFamily: "var(--font-mono)" }}
+              style={{ color: p.ink, fontFamily: "var(--font-mono)" }}
             >
               <span
                 className="inline-block rounded-full px-2 py-0.5"
-                style={{ background: HIGHLIGHT }}
+                style={{ background: p.highlight }}
               >
                 02 · sapphire window
               </span>
@@ -339,11 +348,11 @@ function Hero() {
             <div
               className="absolute right-5 top-5 rotate-[6deg] rounded-md border-2 px-3 py-1 text-[10.5px] tracking-[0.18em] uppercase"
               style={{
-                borderColor: INK,
-                color: INK,
-                background: BG,
+                borderColor: p.ink,
+                color: p.ink,
+                background: p.bg,
                 fontFamily: "var(--font-mono)",
-                boxShadow: "2px 2px 0 rgba(11,31,51,0.12)",
+                boxShadow: `2px 2px 0 ${p.inkHair}`,
               }}
             >
               Ships from SF
@@ -360,19 +369,19 @@ function Hero() {
           ].map(([label, val, sub]) => (
             <div
               key={label}
-              className="flex items-baseline gap-4 rounded-xl border bg-white px-4 py-3"
-              style={{ borderColor: HAIR }}
+              className="flex items-baseline gap-4 rounded-xl border px-4 py-3"
+              style={{ borderColor: p.hair, background: p.card }}
             >
               <span
                 className="w-[72px] shrink-0 text-[10.5px] tracking-[0.16em] uppercase"
-                style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
+                style={{ color: p.soft, fontFamily: "var(--font-mono)" }}
               >
                 {label}
               </span>
               <span className="text-[1.05rem]" style={{ fontWeight: 600 }}>
                 {val}
               </span>
-              <span className="ml-auto text-right text-[12px]" style={{ color: SOFT }}>
+              <span className="ml-auto text-right text-[12px]" style={{ color: p.soft }}>
                 {sub}
               </span>
             </div>
@@ -384,6 +393,7 @@ function Hero() {
 }
 
 function Squiggle() {
+  const p = useV3Palette();
   return (
     <svg
       aria-hidden
@@ -395,7 +405,7 @@ function Squiggle() {
       <path
         d="M2 10 Q 30 2, 55 9 T 110 9 T 165 8 T 218 10"
         fill="none"
-        stroke={HIGHLIGHT}
+        stroke={p.highlight}
         strokeWidth="3"
         strokeLinecap="round"
       />
@@ -404,6 +414,7 @@ function Squiggle() {
 }
 
 function Features() {
+  const p = useV3Palette();
   const items: [React.ReactNode, string, string][] = [
     [<Gauge key="g" size={20} strokeWidth={1.75} />, "Continuous OD", "Reads 50 times a second. No more guessing between offline samples."],
     [<Thermometer key="t" size={20} strokeWidth={1.75} />, "SIP-rated", "316L body, sapphire window. 300+ steam cycles, no drift."],
@@ -416,7 +427,7 @@ function Features() {
     <section
       id="how"
       className="border-t"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-y-4">
@@ -432,7 +443,7 @@ function Features() {
           </h2>
           <p
             className="max-w-md text-[14.5px] leading-[1.55]"
-            style={{ color: SOFT }}
+            style={{ color: p.soft }}
           >
             We started Reacgen because we were tired of pulling samples at 3am.
             ODX-1 is the probe we wanted to buy.
@@ -440,24 +451,24 @@ function Features() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border md:grid-cols-3"
-          style={{ borderColor: HAIR, background: HAIR }}
+          style={{ borderColor: p.hair, background: p.hair }}
         >
           {items.map(([icon, title, body]) => (
             <div
               key={title}
               className="flex flex-col gap-3 p-7 transition-colors"
-              style={{ background: CARD }}
+              style={{ background: p.card }}
             >
               <span
                 className="inline-flex size-9 items-center justify-center rounded-full"
-                style={{ background: BG, color: BRAND, border: `1px solid ${HAIR}` }}
+                style={{ background: p.bg, color: p.brand, border: `1px solid ${p.hair}` }}
               >
                 {icon}
               </span>
               <h3 className="mt-1 text-[1.05rem] tracking-[-0.01em]" style={{ fontWeight: 600 }}>
                 {title}
               </h3>
-              <p className="text-[14px] leading-[1.55]" style={{ color: SOFT }}>
+              <p className="text-[14px] leading-[1.55]" style={{ color: p.soft }}>
                 {body}
               </p>
             </div>
@@ -469,6 +480,7 @@ function Features() {
 }
 
 function DesignedFor() {
+  const p = useV3Palette();
   const pills = [
     "process dev teams",
     "bioprocess engineers",
@@ -484,12 +496,12 @@ function DesignedFor() {
   return (
     <section
       className="border-t"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-24">
         <p
           className="text-[11px] tracking-[0.2em] uppercase"
-          style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+          style={{ color: p.brand, fontFamily: "var(--font-mono)" }}
         >
           designed for
         </p>
@@ -506,17 +518,17 @@ function DesignedFor() {
         </h2>
 
         <div className="mt-10 flex flex-wrap gap-2.5">
-          {pills.map((p, i) => (
+          {pills.map((pill, i) => (
             <span
-              key={p}
+              key={pill}
               className="rounded-full border px-3.5 py-1.5 text-[13px]"
               style={{
-                borderColor: HAIR,
-                background: i % 3 === 0 ? "rgba(47,127,184,0.08)" : CARD,
-                color: INK,
+                borderColor: p.hair,
+                background: i % 3 === 0 ? p.brandWash : p.card,
+                color: p.ink,
               }}
             >
-              {p}
+              {pill}
             </span>
           ))}
         </div>
@@ -526,17 +538,18 @@ function DesignedFor() {
 }
 
 function Dashboard() {
+  const p = useV3Palette();
   return (
     <section
       className="border-t"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
         <div className="grid grid-cols-12 gap-8">
           <div className="col-span-12 md:col-span-5">
             <p
               className="text-[11px] tracking-[0.2em] uppercase"
-              style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+              style={{ color: p.brand, fontFamily: "var(--font-mono)" }}
             >
               the dashboard
             </p>
@@ -550,13 +563,13 @@ function Dashboard() {
             >
               See every reactor on one screen. Or don&apos;t — your DCS is fine too.
             </h2>
-            <p className="mt-5 max-w-md text-[15px] leading-[1.6]" style={{ color: SOFT }}>
+            <p className="mt-5 max-w-md text-[15px] leading-[1.6]" style={{ color: p.soft }}>
               We ship a free web app that auto-discovers any ODX-1 on the same
               network. Live charts, run comparison, CSV export. No login wall,
               no SaaS subscription, no &ldquo;contact sales for pricing.&rdquo;
             </p>
 
-            <ul className="mt-7 space-y-3 text-[14.5px]" style={{ color: INK }}>
+            <ul className="mt-7 space-y-3 text-[14.5px]" style={{ color: p.ink }}>
               {[
                 "Self-hosted, runs in a Docker container",
                 "Reads from any DCS historian via OPC UA",
@@ -566,7 +579,7 @@ function Dashboard() {
                 <li key={t} className="flex gap-3">
                   <span
                     className="mt-2 inline-block size-1.5 rounded-full"
-                    style={{ background: BRAND }}
+                    style={{ background: p.brand }}
                   />
                   {t}
                 </li>
@@ -584,14 +597,14 @@ function Dashboard() {
 }
 
 function FakeChart() {
+  const p = useV3Palette();
   // Sketchy hand-drawn-ish growth curve
   return (
     <div
       className="relative aspect-[16/10] overflow-hidden rounded-2xl border"
       style={{
-        background:
-          "linear-gradient(180deg, #ffffff 0%, #F0F6FC 100%)",
-        borderColor: HAIR,
+        background: `linear-gradient(180deg, ${p.card} 0%, ${p.cardWarm} 100%)`,
+        borderColor: p.hair,
       }}
     >
       <svg
@@ -607,7 +620,7 @@ function FakeChart() {
             x2="780"
             y1={80 + i * 80}
             y2={80 + i * 80}
-            stroke={HAIR}
+            stroke={p.hair}
             strokeWidth="1"
           />
         ))}
@@ -618,7 +631,7 @@ function FakeChart() {
             x2={40 + i * 124}
             y1="80"
             y2="400"
-            stroke={HAIR}
+            stroke={p.hair}
             strokeWidth="1"
           />
         ))}
@@ -627,7 +640,7 @@ function FakeChart() {
         <path
           d="M 40 390 C 120 388, 180 380, 230 360 S 320 270, 380 200 S 480 110, 560 95 S 700 95, 780 105"
           fill="none"
-          stroke={BRAND}
+          stroke={p.brand}
           strokeWidth="3"
           strokeLinecap="round"
           style={{
@@ -639,28 +652,28 @@ function FakeChart() {
         <path
           d="M 40 392 C 120 391, 180 384, 230 365 S 320 278, 380 207 S 480 118, 560 100 S 700 102, 780 112"
           fill="none"
-          stroke={BRAND}
+          stroke={p.brand}
           strokeOpacity="0.25"
           strokeWidth="6"
         />
 
         {/* axis labels */}
-        <text x="20" y="90" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10²</text>
-        <text x="20" y="170" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10¹</text>
-        <text x="20" y="250" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁰</text>
-        <text x="14" y="330" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁻¹</text>
-        <text x="14" y="410" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁻²</text>
+        <text x="20" y="90" fill={p.soft} fontSize="11" fontFamily="JetBrains Mono, monospace">10²</text>
+        <text x="20" y="170" fill={p.soft} fontSize="11" fontFamily="JetBrains Mono, monospace">10¹</text>
+        <text x="20" y="250" fill={p.soft} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁰</text>
+        <text x="14" y="330" fill={p.soft} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁻¹</text>
+        <text x="14" y="410" fill={p.soft} fontSize="11" fontFamily="JetBrains Mono, monospace">10⁻²</text>
 
-        <text x="40" y="430" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">0h</text>
-        <text x="408" y="430" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">12h</text>
-        <text x="772" y="430" fill={SOFT} fontSize="11" fontFamily="JetBrains Mono, monospace">24h</text>
+        <text x="40" y="430" fill={p.soft} fontSize="11" fontFamily="JetBrains Mono, monospace">0h</text>
+        <text x="408" y="430" fill={p.soft} fontSize="11" fontFamily="JetBrains Mono, monospace">12h</text>
+        <text x="772" y="430" fill={p.soft} fontSize="11" fontFamily="JetBrains Mono, monospace">24h</text>
 
         {/* phase annotation */}
-        <line x1="380" y1="200" x2="380" y2="450" stroke={INK} strokeOpacity="0.25" strokeDasharray="4 4" />
+        <line x1="380" y1="200" x2="380" y2="450" stroke={p.ink} strokeOpacity="0.25" strokeDasharray="4 4" />
         <text
           x="386"
           y="470"
-          fill={INK}
+          fill={p.ink}
           fontSize="12"
           fontFamily="JetBrains Mono, monospace"
         >
@@ -670,11 +683,11 @@ function FakeChart() {
 
       <div
         className="absolute left-5 top-5 flex items-center gap-2 text-[11px] tracking-wide"
-        style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
+        style={{ color: p.soft, fontFamily: "var(--font-mono)" }}
       >
         <span
           className="inline-block size-1.5 rounded-full"
-          style={{ background: BRAND }}
+          style={{ background: p.brand }}
         />
         reactor-04 · E. coli BL21 · 2026-03-12
       </div>
@@ -682,9 +695,9 @@ function FakeChart() {
       <div
         className="absolute right-5 top-5 rounded-md border px-2 py-1 text-[10.5px] tracking-wider uppercase"
         style={{
-          borderColor: HAIR,
-          background: CARD,
-          color: INK,
+          borderColor: p.hair,
+          background: p.card,
+          color: p.ink,
           fontFamily: "var(--font-mono)",
         }}
       >
@@ -695,6 +708,7 @@ function FakeChart() {
 }
 
 function Specs() {
+  const p = useV3Palette();
   const rows: [string, string][] = [
     ["Wavelengths", "600 nm + 850 nm (alternating, ratiometric)"],
     ["Process connection", "12 mm Ingold (standard) · 25 mm Ingold (option)"],
@@ -711,14 +725,14 @@ function Specs() {
     <section
       id="specs"
       className="border-t"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-y-4">
           <div>
             <p
               className="text-[11px] tracking-[0.2em] uppercase"
-              style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+              style={{ color: p.brand, fontFamily: "var(--font-mono)" }}
             >
               the specs
             </p>
@@ -736,31 +750,31 @@ function Specs() {
           <Link
             href="#"
             className="inline-flex items-center gap-2 text-[14px]"
-            style={{ color: INK }}
+            style={{ color: p.ink }}
           >
-            Datasheet (PDF) <ArrowUpRight size={14} style={{ color: BRAND }} />
+            Datasheet (PDF) <ArrowUpRight size={14} style={{ color: p.brand }} />
           </Link>
         </div>
 
         <dl
-          className="mt-10 overflow-hidden rounded-2xl border bg-white"
-          style={{ borderColor: HAIR }}
+          className="mt-10 overflow-hidden rounded-2xl border"
+          style={{ borderColor: p.hair, background: p.card }}
         >
           {rows.map(([k, v], i) => (
             <div
               key={k}
               className="grid grid-cols-12 gap-x-4 px-5 py-4 text-[14.5px] md:px-7"
               style={{
-                borderTop: i === 0 ? "none" : `1px solid ${HAIR}`,
+                borderTop: i === 0 ? "none" : `1px solid ${p.hair}`,
               }}
             >
               <dt
                 className="col-span-12 text-[12px] tracking-[0.12em] uppercase md:col-span-4"
-                style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
+                style={{ color: p.soft, fontFamily: "var(--font-mono)" }}
               >
                 {k}
               </dt>
-              <dd className="col-span-12 md:col-span-8" style={{ color: INK }}>
+              <dd className="col-span-12 md:col-span-8" style={{ color: p.ink }}>
                 {v}
               </dd>
             </div>
@@ -772,6 +786,7 @@ function Specs() {
 }
 
 function Notebook() {
+  const p = useV3Palette();
   const posts: [string, string, string, string, React.ReactNode][] = [
     [
       "Why we built a probe instead of a SaaS",
@@ -799,14 +814,14 @@ function Notebook() {
     <section
       id="notebook"
       className="border-t"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
         <div className="flex flex-wrap items-end justify-between gap-y-4">
           <div>
             <p
               className="text-[11px] tracking-[0.2em] uppercase"
-              style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+              style={{ color: p.brand, fontFamily: "var(--font-mono)" }}
             >
               from the notebook
             </p>
@@ -824,45 +839,23 @@ function Notebook() {
           <Link
             href="#"
             className="inline-flex items-center gap-2 text-[14px]"
-            style={{ color: INK }}
+            style={{ color: p.ink }}
           >
-            All posts <ArrowUpRight size={14} style={{ color: BRAND }} />
+            All posts <ArrowUpRight size={14} style={{ color: p.brand }} />
           </Link>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
           {posts.map(([title, meta, body, cta, icon]) => (
-            <Link
+            <NotebookCard
               key={title}
-              href="#"
-              className="group flex h-full flex-col rounded-2xl border bg-white p-6 transition-colors hover:border-[rgba(47,127,184,0.5)]"
-              style={{ borderColor: HAIR }}
-            >
-              <span
-                className="inline-flex size-9 items-center justify-center rounded-full"
-                style={{ background: BG, color: BRAND, border: `1px solid ${HAIR}` }}
-              >
-                {icon}
-              </span>
-              <p
-                className="mt-5 text-[11px] tracking-[0.16em] uppercase"
-                style={{ color: SOFT, fontFamily: "var(--font-mono)" }}
-              >
-                {meta}
-              </p>
-              <h3 className="mt-2 text-[1.15rem] leading-[1.25]" style={{ fontWeight: 600 }}>
-                {title}
-              </h3>
-              <p className="mt-3 flex-1 text-[14px] leading-[1.55]" style={{ color: SOFT }}>
-                {body}
-              </p>
-              <span
-                className="mt-5 inline-flex items-center gap-1.5 text-[13.5px]"
-                style={{ color: BRAND }}
-              >
-                {cta} <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </Link>
+              p={p}
+              title={title}
+              meta={meta}
+              body={body}
+              cta={cta}
+              icon={icon}
+            />
           ))}
         </div>
       </div>
@@ -870,20 +863,76 @@ function Notebook() {
   );
 }
 
+function NotebookCard({
+  p,
+  title,
+  meta,
+  body,
+  cta,
+  icon,
+}: {
+  p: V3Palette;
+  title: string;
+  meta: string;
+  body: string;
+  cta: string;
+  icon: React.ReactNode;
+}) {
+  return (
+    <Link
+      href="#"
+      className="group flex h-full flex-col rounded-2xl border p-6 transition-colors hover:border-[var(--v3-hover-border)]"
+      style={
+        {
+          borderColor: p.hair,
+          background: p.card,
+          "--v3-hover-border": p.brandSoft,
+        } as React.CSSProperties
+      }
+    >
+      <span
+        className="inline-flex size-9 items-center justify-center rounded-full"
+        style={{ background: p.bg, color: p.brand, border: `1px solid ${p.hair}` }}
+      >
+        {icon}
+      </span>
+      <p
+        className="mt-5 text-[11px] tracking-[0.16em] uppercase"
+        style={{ color: p.soft, fontFamily: "var(--font-mono)" }}
+      >
+        {meta}
+      </p>
+      <h3 className="mt-2 text-[1.15rem] leading-[1.25]" style={{ fontWeight: 600 }}>
+        {title}
+      </h3>
+      <p className="mt-3 flex-1 text-[14px] leading-[1.55]" style={{ color: p.soft }}>
+        {body}
+      </p>
+      <span
+        className="mt-5 inline-flex items-center gap-1.5 text-[13.5px]"
+        style={{ color: p.brand }}
+      >
+        {cta} <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+      </span>
+    </Link>
+  );
+}
+
 function Newsletter() {
+  const p = useV3Palette();
   return (
     <section
       id="shop"
       className="border-t"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div className="mx-auto max-w-[80rem] px-6 py-20 md:px-10 md:py-28">
         <div
           className="relative overflow-hidden rounded-3xl border p-8 md:p-14"
           style={{
-            background: INK,
-            color: BG,
-            borderColor: INK,
+            background: p.ink,
+            color: p.bg,
+            borderColor: p.ink,
           }}
         >
           {/* subtle dotted bg */}
@@ -891,8 +940,7 @@ function Newsletter() {
             aria-hidden
             className="pointer-events-none absolute inset-0 opacity-[0.12]"
             style={{
-              backgroundImage:
-                "radial-gradient(circle, rgba(244,248,252,0.8) 1px, transparent 1px)",
+              backgroundImage: `radial-gradient(circle, ${p.bgWashSoft} 1px, transparent 1px)`,
               backgroundSize: "22px 22px",
             }}
           />
@@ -901,7 +949,7 @@ function Newsletter() {
             <div className="col-span-12 md:col-span-7">
               <p
                 className="text-[11px] tracking-[0.2em] uppercase"
-                style={{ color: HIGHLIGHT, fontFamily: "var(--font-mono)" }}
+                style={{ color: p.highlight, fontFamily: "var(--font-mono)" }}
               >
                 get one in your lab
               </p>
@@ -929,14 +977,14 @@ function Newsletter() {
                   required
                   placeholder="you@yourlab.org"
                   className="flex-1 rounded-full border bg-transparent px-5 py-3 text-[14.5px] outline-none placeholder:text-white/40 focus:border-white/40"
-                  style={{ borderColor: "rgba(244,248,252,0.2)", color: BG }}
+                  style={{ borderColor: p.bgWashStrong, color: p.bg }}
                 />
                 <Link
                   href="/v3/whitelist"
                   className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[14.5px] transition-transform hover:translate-y-[-1px]"
                   style={{
-                    background: HIGHLIGHT,
-                    color: INK,
+                    background: p.highlight,
+                    color: p.ink,
                     fontWeight: 500,
                   }}
                 >
@@ -945,7 +993,7 @@ function Newsletter() {
               </form>
               <p
                 className="mt-3 text-[12px]"
-                style={{ color: HIGHLIGHT, fontFamily: "var(--font-mono)" }}
+                style={{ color: p.highlight, fontFamily: "var(--font-mono)" }}
               >
                 no spam · two emails a month, max · unsubscribe with one click
               </p>
@@ -960,21 +1008,21 @@ function Newsletter() {
                 ctaId="forum-v3-contact"
                 location="contact-panel"
                 className="group flex items-start gap-4 rounded-2xl border p-5 transition-colors no-underline"
-                style={{ borderColor: "rgba(244,248,252,0.2)", background: "rgba(244,248,252,0.04)" }}
+                style={{ borderColor: p.bgWashStrong, background: p.bgWash }}
               >
                 <span
                   className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full"
-                  style={{ background: BG, color: BRAND }}
+                  style={{ background: p.bg, color: p.brand }}
                 >
                   <MessagesSquare size={16} strokeWidth={1.75} />
                 </span>
                 <div className="flex-1">
-                  <p className="text-[11px] tracking-[0.2em] uppercase" style={{ color: HIGHLIGHT }}>
+                  <p className="text-[11px] tracking-[0.2em] uppercase" style={{ color: p.highlight }}>
                     Open community
                   </p>
                   <p
                     className="mt-1.5 text-[15px] leading-[1.45]"
-                    style={{ color: BG, fontFamily: "var(--font-sans)", fontWeight: 500 }}
+                    style={{ color: p.bg, fontFamily: "var(--font-sans)", fontWeight: 500 }}
                   >
                     Ask anything at forum.reacgen.local
                   </p>
@@ -989,20 +1037,20 @@ function Newsletter() {
                 <ArrowUpRight
                   size={16}
                   className="mt-1 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  style={{ color: HIGHLIGHT }}
+                  style={{ color: p.highlight }}
                 />
               </TrackedLink>
 
               <div className="mt-6 grid grid-cols-2 gap-4 text-[12.5px]" style={{ opacity: 0.7 }}>
                 <div>
-                  <p style={{ color: HIGHLIGHT }}>SHIPPING</p>
-                  <p className="mt-1" style={{ color: BG }}>2-week lead</p>
-                  <p style={{ color: BG }}>from San Francisco</p>
+                  <p style={{ color: p.highlight }}>SHIPPING</p>
+                  <p className="mt-1" style={{ color: p.bg }}>2-week lead</p>
+                  <p style={{ color: p.bg }}>from San Francisco</p>
                 </div>
                 <div>
-                  <p style={{ color: HIGHLIGHT }}>SUPPORT</p>
-                  <p className="mt-1" style={{ color: BG }}>probe@reacgen.bio</p>
-                  <p style={{ color: BG }}>+1 (415) 555-0119</p>
+                  <p style={{ color: p.highlight }}>SUPPORT</p>
+                  <p className="mt-1" style={{ color: p.bg }}>probe@reacgen.bio</p>
+                  <p style={{ color: p.bg }}>+1 (415) 555-0119</p>
                 </div>
               </div>
             </aside>
@@ -1014,24 +1062,30 @@ function Newsletter() {
 }
 
 function Foot() {
+  const p = useV3Palette();
   return (
     <footer
       className="border-t"
-      style={{ borderColor: HAIR }}
+      style={{ borderColor: p.hair }}
     >
       <div
         className="mx-auto flex max-w-[80rem] flex-col gap-6 px-6 py-10 text-[13px] md:flex-row md:items-center md:justify-between md:px-10"
-        style={{ color: SOFT }}
+        style={
+          {
+            color: p.soft,
+            "--v3-foot-hover": p.ink,
+          } as React.CSSProperties
+        }
       >
         <div className="flex items-center gap-3">
           <Image src="/logo-mark.png" alt="Reacgen" width={22} height={22} />
           <span>© 2026 Reacgen Biosystems · made in SF</span>
         </div>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2" style={{ fontFamily: "var(--font-mono)" }}>
-          <Link href="#" className="hover:text-[#0B1F33]">privacy</Link>
-          <Link href="#" className="hover:text-[#0B1F33]">terms</Link>
-          <Link href="#" className="hover:text-[#0B1F33]">careers</Link>
-          <Link href="/" className="hover:text-[#0B1F33]">← variants</Link>
+          <Link href="#" className="hover:text-[var(--v3-foot-hover)]">privacy</Link>
+          <Link href="#" className="hover:text-[var(--v3-foot-hover)]">terms</Link>
+          <Link href="#" className="hover:text-[var(--v3-foot-hover)]">careers</Link>
+          <Link href="/" className="hover:text-[var(--v3-foot-hover)]">← variants</Link>
         </div>
       </div>
     </footer>

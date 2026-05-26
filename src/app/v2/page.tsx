@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { TrackedLink } from "@/components/TrackedLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Major_Mono_Display } from "next/font/google";
+import { useV2Palette, type V2Palette } from "@/lib/theme";
 
 const display = Major_Mono_Display({
   subsets: ["latin"],
@@ -28,22 +29,14 @@ const sans = IBM_Plex_Sans({
   display: "swap",
 });
 
-const BG = "#06080A";
-const PANEL = "#0C1014";
-const GRID = "#1A2128";
-const TEXT = "#D4DDE0";
-const MUTED = "#5A6770";
-const BRAND = "#3DA478";
-const HOT = "#7CFFAE";
-const WARN = "#F4B860";
-
 export default function V2Page() {
+  const p = useV2Palette();
   return (
     <div
       className={`${display.variable} ${mono.variable} ${sans.variable} min-h-screen overflow-x-hidden`}
       style={{
-        background: BG,
-        color: TEXT,
+        background: p.bg,
+        color: p.text,
         fontFamily: "var(--font-sans)",
       }}
     >
@@ -64,13 +57,14 @@ export default function V2Page() {
 }
 
 function BackdropGrid() {
+  const p = useV2Palette();
   return (
     <div
       aria-hidden
       className="pointer-events-none fixed inset-0 z-0"
       style={{
         backgroundImage:
-          `linear-gradient(${GRID} 1px, transparent 1px), linear-gradient(90deg, ${GRID} 1px, transparent 1px)`,
+          `linear-gradient(${p.grid} 1px, transparent 1px), linear-gradient(90deg, ${p.grid} 1px, transparent 1px)`,
         backgroundSize: "56px 56px",
         maskImage:
           "radial-gradient(ellipse at center, black 25%, transparent 80%)",
@@ -81,19 +75,20 @@ function BackdropGrid() {
 }
 
 function StatusBar() {
+  const p = useV2Palette();
   return (
     <header
       className="relative z-10 flex flex-wrap items-center justify-between gap-y-2 border-b px-6 py-3 text-[10.5px] tracking-[0.16em] uppercase md:px-10"
       style={{
-        borderColor: GRID,
+        borderColor: p.grid,
         fontFamily: "var(--font-mono)",
-        color: MUTED,
+        color: p.muted,
       }}
     >
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <Image src="/logo-mark.png" alt="Reacgen" width={20} height={20} />
-          <span style={{ color: TEXT }}>Reacgen / ODX-1</span>
+          <span style={{ color: p.text }}>Reacgen / ODX-1</span>
         </div>
         <span className="hidden md:inline">FW 2.4.1</span>
         <span className="hidden md:inline">SN 00-A4-7C-13</span>
@@ -105,33 +100,48 @@ function StatusBar() {
           href="http://forum.reacgen.local/"
           ctaId="forum-v2-statusbar"
           location="statusbar"
-          className="inline-flex items-center gap-1.5 transition-colors hover:text-[#7CFFAE]"
-          style={{ color: BRAND }}
+          className="inline-flex items-center gap-1.5 transition-colors hover:text-[var(--v2-hover-fg)]"
+          style={
+            {
+              color: p.brand,
+              "--v2-hover-fg": p.hot,
+            } as React.CSSProperties
+          }
         >
           // community
         </TrackedLink>
         <Link
           href="/v2/account"
-          className="inline-flex items-center gap-1.5 transition-colors hover:text-[#7CFFAE]"
-          style={{ color: BRAND }}
+          className="inline-flex items-center gap-1.5 transition-colors hover:text-[var(--v2-hover-fg)]"
+          style={
+            {
+              color: p.brand,
+              "--v2-hover-fg": p.hot,
+            } as React.CSSProperties
+          }
         >
           // account
         </Link>
         <ThemeToggle
-          className="inline-flex items-center transition-colors hover:text-[#7CFFAE]"
-          style={{ color: BRAND }}
+          className="inline-flex items-center transition-colors hover:text-[var(--v2-hover-fg)]"
+          style={
+            {
+              color: p.brand,
+              "--v2-hover-fg": p.hot,
+            } as React.CSSProperties
+          }
           size={13}
         />
         <div className="flex items-center gap-2">
           <span
             className="inline-block size-2 rounded-full"
             style={{
-              background: HOT,
-              boxShadow: `0 0 8px ${HOT}`,
+              background: p.hot,
+              boxShadow: `0 0 8px ${p.hot}`,
               animation: "rg-fade-in 800ms ease-out both",
             }}
           />
-          <span style={{ color: HOT }}>ready</span>
+          <span style={{ color: p.hot }}>ready</span>
         </div>
       </div>
     </header>
@@ -139,6 +149,7 @@ function StatusBar() {
 }
 
 function Hero() {
+  const p = useV2Palette();
   return (
     <section className="relative z-10 mx-auto max-w-[88rem] px-6 pt-12 pb-16 md:px-10 md:pt-20 md:pb-24">
       <div className="grid grid-cols-12 gap-x-8 gap-y-12">
@@ -146,7 +157,7 @@ function Hero() {
           <p
             className="text-[11px] tracking-[0.32em] uppercase"
             style={{
-              color: BRAND,
+              color: p.brand,
               fontFamily: "var(--font-mono)",
               animation: "rg-fade-up 700ms ease-out 80ms both",
             }}
@@ -165,7 +176,7 @@ function Hero() {
           >
             Live biomass.
             <br />
-            <span style={{ color: BRAND }}>Inside</span> the reactor,
+            <span style={{ color: p.brand }}>Inside</span> the reactor,
             <br />
             not beside it.
           </h1>
@@ -173,7 +184,7 @@ function Hero() {
           <p
             className="mt-8 max-w-xl text-[1.05rem] leading-[1.55]"
             style={{
-              color: "rgba(212,221,224,0.78)",
+              color: p.textBody,
               animation: "rg-fade-up 800ms ease-out 360ms both",
             }}
           >
@@ -193,8 +204,8 @@ function Hero() {
               className="inline-flex items-center gap-3 px-6 py-3 text-[11px] tracking-[0.22em] uppercase transition-colors hover:opacity-90"
               style={{
                 fontFamily: "var(--font-mono)",
-                background: BRAND,
-                color: BG,
+                background: p.brand,
+                color: p.bg,
               }}
             >
               Request unit
@@ -205,8 +216,8 @@ function Hero() {
               className="inline-flex items-center gap-2 px-5 py-3 text-[11px] tracking-[0.22em] uppercase transition-colors"
               style={{
                 fontFamily: "var(--font-mono)",
-                border: `1px solid ${GRID}`,
-                color: TEXT,
+                border: `1px solid ${p.grid}`,
+                color: p.text,
               }}
             >
               View schematic
@@ -236,15 +247,16 @@ function Hero() {
 }
 
 function Spec({ label, value }: { label: string; value: string }) {
+  const p = useV2Palette();
   return (
     <div>
       <p
         className="text-[10px] tracking-[0.22em] uppercase"
-        style={{ color: MUTED }}
+        style={{ color: p.muted }}
       >
         {label}
       </p>
-      <p className="mt-1 text-[1.05rem]" style={{ color: TEXT }}>
+      <p className="mt-1 text-[1.05rem]" style={{ color: p.text }}>
         {value}
       </p>
     </div>
@@ -269,14 +281,15 @@ function useCountUp(target: number, duration = 1400) {
 }
 
 function Readout() {
+  const p = useV2Palette();
   const od = useCountUp(2.847);
   const wl = useCountUp(600.0);
   return (
     <div
       className="relative overflow-hidden border p-6 md:p-8"
       style={{
-        borderColor: GRID,
-        background: `linear-gradient(180deg, ${PANEL} 0%, #0a0d11 100%)`,
+        borderColor: p.grid,
+        background: `linear-gradient(180deg, ${p.panel} 0%, ${p.deepBg} 100%)`,
         animation: "rg-fade-up 800ms ease-out 220ms both",
       }}
     >
@@ -288,10 +301,10 @@ function Readout() {
 
       <div
         className="flex items-center justify-between text-[10px] tracking-[0.22em] uppercase"
-        style={{ fontFamily: "var(--font-mono)", color: MUTED }}
+        style={{ fontFamily: "var(--font-mono)", color: p.muted }}
       >
         <span>OD₆₀₀ · live</span>
-        <span style={{ color: HOT }}>● recording</span>
+        <span style={{ color: p.hot }}>● recording</span>
       </div>
 
       <div className="mt-8 flex items-end gap-4">
@@ -300,7 +313,7 @@ function Readout() {
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "clamp(4rem, 11vw, 7.2rem)",
-            color: TEXT,
+            color: p.text,
             letterSpacing: "-0.04em",
           }}
         >
@@ -308,7 +321,7 @@ function Readout() {
         </span>
         <span
           className="pb-3 text-[11px] tracking-[0.22em] uppercase"
-          style={{ color: MUTED, fontFamily: "var(--font-mono)" }}
+          style={{ color: p.muted, fontFamily: "var(--font-mono)" }}
         >
           OD
         </span>
@@ -316,7 +329,7 @@ function Readout() {
 
       <div
         className="mt-3 text-[11px] tracking-[0.18em] uppercase"
-        style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+        style={{ color: p.brand, fontFamily: "var(--font-mono)" }}
       >
         ± 0.012 · cv 0.4%
       </div>
@@ -324,26 +337,26 @@ function Readout() {
       <div
         className="mt-10 grid grid-cols-3 gap-3 border-t pt-6 text-[10px] tracking-[0.18em] uppercase"
         style={{
-          borderColor: GRID,
-          color: MUTED,
+          borderColor: p.grid,
+          color: p.muted,
           fontFamily: "var(--font-mono)",
         }}
       >
         <div>
           <p>λ primary</p>
-          <p className="mt-1 text-[1.05rem]" style={{ color: TEXT }}>
+          <p className="mt-1 text-[1.05rem]" style={{ color: p.text }}>
             {wl.toFixed(1)} nm
           </p>
         </div>
         <div>
           <p>temp</p>
-          <p className="mt-1 text-[1.05rem]" style={{ color: TEXT }}>
+          <p className="mt-1 text-[1.05rem]" style={{ color: p.text }}>
             37.0 °C
           </p>
         </div>
         <div>
           <p>uptime</p>
-          <p className="mt-1 text-[1.05rem]" style={{ color: TEXT }}>
+          <p className="mt-1 text-[1.05rem]" style={{ color: p.text }}>
             42:08:11
           </p>
         </div>
@@ -357,14 +370,14 @@ function Readout() {
       >
         <defs>
           <linearGradient id="rg-spark" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={BRAND} stopOpacity="0.35" />
-            <stop offset="100%" stopColor={BRAND} stopOpacity="0" />
+            <stop offset="0%" stopColor={p.brand} stopOpacity="0.35" />
+            <stop offset="100%" stopColor={p.brand} stopOpacity="0" />
           </linearGradient>
         </defs>
         <path
           d="M0,72 L20,70 L40,68 L60,64 L80,58 L100,52 L120,46 L140,42 L160,36 L180,30 L200,24 L220,20 L240,16 L260,14 L280,12 L320,10"
           fill="none"
-          stroke={BRAND}
+          stroke={p.brand}
           strokeWidth="1.5"
           style={{
             strokeDasharray: 600,
@@ -384,7 +397,7 @@ function Readout() {
             x2="320"
             y1={y}
             y2={y}
-            stroke={GRID}
+            stroke={p.grid}
             strokeWidth="1"
           />
         ))}
@@ -395,7 +408,7 @@ function Readout() {
         aria-hidden
         className="absolute inset-x-0 top-0 h-px"
         style={{
-          background: `linear-gradient(90deg, transparent, ${BRAND}, transparent)`,
+          background: `linear-gradient(90deg, transparent, ${p.brand}, transparent)`,
           animation: "rg-scan 6s ease-in-out 1s infinite",
         }}
       />
@@ -404,6 +417,7 @@ function Readout() {
 }
 
 function Corner({ pos }: { pos: "tl" | "tr" | "bl" | "br" }) {
+  const p = useV2Palette();
   const cls: Record<typeof pos, string> = {
     tl: "top-0 left-0 border-t border-l",
     tr: "top-0 right-0 border-t border-r",
@@ -414,12 +428,13 @@ function Corner({ pos }: { pos: "tl" | "tr" | "bl" | "br" }) {
     <span
       aria-hidden
       className={`absolute size-3 ${cls[pos]}`}
-      style={{ borderColor: BRAND }}
+      style={{ borderColor: p.brand }}
     />
   );
 }
 
 function Schematic() {
+  const p = useV2Palette();
   const callouts = [
     { num: "01", label: "Sapphire window", desc: "flush mount, polished ⌀ 8 mm" },
     { num: "02", label: "Emitter pair", desc: "600 + 850 nm, dichroic split" },
@@ -438,7 +453,7 @@ function Schematic() {
 
       <div
         className="mt-12 grid grid-cols-12 gap-x-8 gap-y-10 border p-6 md:p-10"
-        style={{ borderColor: GRID, background: PANEL }}
+        style={{ borderColor: p.grid, background: p.panel }}
       >
         <div className="col-span-12 md:col-span-8">
           <svg
@@ -459,7 +474,7 @@ function Schematic() {
                   y1="0"
                   x2="0"
                   y2="6"
-                  stroke={MUTED}
+                  stroke={p.muted}
                   strokeWidth="0.6"
                   opacity="0.4"
                 />
@@ -473,7 +488,7 @@ function Schematic() {
               width="380"
               height="80"
               fill="none"
-              stroke={MUTED}
+              stroke={p.muted}
               strokeWidth="1"
             />
             <rect
@@ -487,8 +502,8 @@ function Schematic() {
             {/* tip / window */}
             <path
               d="M160,100 L100,120 L100,160 L160,180 Z"
-              fill={PANEL}
-              stroke={BRAND}
+              fill={p.panel}
+              stroke={p.brand}
               strokeWidth="1.5"
             />
             <line
@@ -496,21 +511,21 @@ function Schematic() {
               y1="120"
               x2="100"
               y2="160"
-              stroke={HOT}
+              stroke={p.hot}
               strokeWidth="2"
             />
 
             {/* internal optics path */}
-            <line x1="118" y1="130" x2="540" y2="130" stroke={BRAND} strokeWidth="0.8" strokeDasharray="3 3" />
-            <line x1="118" y1="150" x2="540" y2="150" stroke={BRAND} strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="118" y1="130" x2="540" y2="130" stroke={p.brand} strokeWidth="0.8" strokeDasharray="3 3" />
+            <line x1="118" y1="150" x2="540" y2="150" stroke={p.brand} strokeWidth="0.8" strokeDasharray="3 3" />
 
             {/* transmitter */}
-            <rect x="540" y="80" width="120" height="120" fill="none" stroke={MUTED} strokeWidth="1" />
+            <rect x="540" y="80" width="120" height="120" fill="none" stroke={p.muted} strokeWidth="1" />
             <rect x="540" y="80" width="120" height="120" fill="url(#hatch)" />
 
             {/* M12 connector */}
-            <circle cx="700" cy="140" r="14" fill="none" stroke={MUTED} strokeWidth="1" />
-            <line x1="660" y1="140" x2="686" y2="140" stroke={MUTED} strokeWidth="1" />
+            <circle cx="700" cy="140" r="14" fill="none" stroke={p.muted} strokeWidth="1" />
+            <line x1="660" y1="140" x2="686" y2="140" stroke={p.muted} strokeWidth="1" />
 
             {/* callout lines + dots */}
             {[
@@ -521,13 +536,13 @@ function Schematic() {
               { x: 600, y: 140, lx: 660, ly: 240 },
             ].map((c, i) => (
               <g key={i}>
-                <circle cx={c.x} cy={c.y} r="3" fill={BRAND} />
+                <circle cx={c.x} cy={c.y} r="3" fill={p.brand} />
                 <line
                   x1={c.x}
                   y1={c.y}
                   x2={c.lx}
                   y2={c.ly}
-                  stroke={MUTED}
+                  stroke={p.muted}
                   strokeWidth="0.6"
                 />
                 <text
@@ -535,7 +550,7 @@ function Schematic() {
                   y={c.ly - 6}
                   fontSize="11"
                   fontFamily="IBM Plex Mono, monospace"
-                  fill={TEXT}
+                  fill={p.text}
                   textAnchor={c.lx > 360 ? "start" : "end"}
                 >
                   0{i + 1}
@@ -544,15 +559,15 @@ function Schematic() {
             ))}
 
             {/* dimension marks */}
-            <line x1="100" y1="220" x2="660" y2="220" stroke={MUTED} strokeWidth="0.6" />
-            <line x1="100" y1="216" x2="100" y2="224" stroke={MUTED} strokeWidth="0.6" />
-            <line x1="660" y1="216" x2="660" y2="224" stroke={MUTED} strokeWidth="0.6" />
+            <line x1="100" y1="220" x2="660" y2="220" stroke={p.muted} strokeWidth="0.6" />
+            <line x1="100" y1="216" x2="100" y2="224" stroke={p.muted} strokeWidth="0.6" />
+            <line x1="660" y1="216" x2="660" y2="224" stroke={p.muted} strokeWidth="0.6" />
             <text
               x="380"
               y="240"
               fontSize="10"
               fontFamily="IBM Plex Mono, monospace"
-              fill={MUTED}
+              fill={p.muted}
               textAnchor="middle"
               letterSpacing="2"
             >
@@ -566,14 +581,14 @@ function Schematic() {
             <li
               key={c.num}
               className="flex gap-4 border-l py-2 pl-4"
-              style={{ borderColor: GRID, fontFamily: "var(--font-mono)" }}
+              style={{ borderColor: p.grid, fontFamily: "var(--font-mono)" }}
             >
-              <span style={{ color: BRAND }}>{c.num}</span>
+              <span style={{ color: p.brand }}>{c.num}</span>
               <div>
-                <p className="text-[0.95rem]" style={{ color: TEXT }}>
+                <p className="text-[0.95rem]" style={{ color: p.text }}>
                   {c.label}
                 </p>
-                <p className="mt-1 text-[0.8rem]" style={{ color: MUTED }}>
+                <p className="mt-1 text-[0.8rem]" style={{ color: p.muted }}>
                   {c.desc}
                 </p>
               </div>
@@ -586,6 +601,7 @@ function Schematic() {
 }
 
 function DataPanel() {
+  const p = useV2Palette();
   return (
     <section className="relative z-10 mx-auto max-w-[88rem] px-6 py-16 md:px-10 md:py-24">
       <SectionHead
@@ -596,7 +612,7 @@ function DataPanel() {
 
       <div
         className="mt-12 border p-6 md:p-10"
-        style={{ borderColor: GRID, background: PANEL }}
+        style={{ borderColor: p.grid, background: p.panel }}
       >
         <FermentationChart />
 
@@ -615,6 +631,7 @@ function DataPanel() {
 }
 
 function FermentationChart() {
+  const p = useV2Palette();
   const w = 1200;
   const h = 320;
   const points: [number, number][] = [];
@@ -626,7 +643,7 @@ function FermentationChart() {
     points.push([x, y]);
   }
   const linePath = points
-    .map((p, i) => `${i === 0 ? "M" : "L"}${p[0].toFixed(1)},${p[1].toFixed(1)}`)
+    .map((pt, i) => `${i === 0 ? "M" : "L"}${pt[0].toFixed(1)},${pt[1].toFixed(1)}`)
     .join(" ");
   const areaPath = `${linePath} L${w},${h} L0,${h} Z`;
 
@@ -634,8 +651,8 @@ function FermentationChart() {
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full" preserveAspectRatio="none">
       <defs>
         <linearGradient id="rg-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={BRAND} stopOpacity="0.25" />
-          <stop offset="100%" stopColor={BRAND} stopOpacity="0" />
+          <stop offset="0%" stopColor={p.brand} stopOpacity="0.25" />
+          <stop offset="100%" stopColor={p.brand} stopOpacity="0" />
         </linearGradient>
       </defs>
 
@@ -647,7 +664,7 @@ function FermentationChart() {
           x2={w}
           y1={h * g}
           y2={h * g}
-          stroke={GRID}
+          stroke={p.grid}
           strokeWidth="1"
         />
       ))}
@@ -662,7 +679,7 @@ function FermentationChart() {
               x2={x}
               y1={h - 10}
               y2={h}
-              stroke={MUTED}
+              stroke={p.muted}
               strokeWidth="1"
             />
             <text
@@ -670,7 +687,7 @@ function FermentationChart() {
               y={h - 14}
               fontSize="12"
               fontFamily="IBM Plex Mono, monospace"
-              fill={MUTED}
+              fill={p.muted}
               textAnchor={hour === 0 ? "start" : hour === 48 ? "end" : "middle"}
             >
               {hour}h
@@ -692,7 +709,7 @@ function FermentationChart() {
           y={t.y}
           fontSize="11"
           fontFamily="IBM Plex Mono, monospace"
-          fill={MUTED}
+          fill={p.muted}
         >
           OD {t.v}
         </text>
@@ -703,7 +720,7 @@ function FermentationChart() {
       <path
         d={linePath}
         fill="none"
-        stroke={BRAND}
+        stroke={p.brand}
         strokeWidth="2"
         style={{
           strokeDasharray: 1400,
@@ -717,7 +734,7 @@ function FermentationChart() {
         x2={(20 / 48) * w}
         y1="40"
         y2={h * 0.4}
-        stroke={WARN}
+        stroke={p.warn}
         strokeWidth="1"
         strokeDasharray="3 3"
       />
@@ -726,7 +743,7 @@ function FermentationChart() {
         y="56"
         fontSize="11"
         fontFamily="IBM Plex Mono, monospace"
-        fill={WARN}
+        fill={p.warn}
       >
         induction · IPTG
       </text>
@@ -735,15 +752,16 @@ function FermentationChart() {
 }
 
 function Stat({ n, v, hint }: { n: string; v: string; hint: string }) {
+  const p = useV2Palette();
   return (
     <div>
-      <p className="text-[10px] tracking-[0.22em] uppercase" style={{ color: MUTED }}>
+      <p className="text-[10px] tracking-[0.22em] uppercase" style={{ color: p.muted }}>
         {n}
       </p>
-      <p className="mt-1 text-[1.4rem]" style={{ color: TEXT }}>
+      <p className="mt-1 text-[1.4rem]" style={{ color: p.text }}>
         {v}
       </p>
-      <p className="text-[10px] tracking-[0.16em] uppercase" style={{ color: BRAND }}>
+      <p className="text-[10px] tracking-[0.16em] uppercase" style={{ color: p.brand }}>
         {hint}
       </p>
     </div>
@@ -751,6 +769,7 @@ function Stat({ n, v, hint }: { n: string; v: string; hint: string }) {
 }
 
 function Specs() {
+  const p = useV2Palette();
   const cols: [string, [string, string][]][] = [
     [
       "Optical",
@@ -810,7 +829,7 @@ function Specs() {
           <div key={title}>
             <h3
               className="border-b pb-3 text-[11px] tracking-[0.22em] uppercase"
-              style={{ borderColor: GRID, color: BRAND }}
+              style={{ borderColor: p.grid, color: p.brand }}
             >
               {title}
             </h3>
@@ -819,11 +838,11 @@ function Specs() {
                 <div key={k}>
                   <dt
                     className="text-[10px] tracking-[0.16em] uppercase"
-                    style={{ color: MUTED }}
+                    style={{ color: p.muted }}
                   >
                     {k}
                   </dt>
-                  <dd className="mt-0.5 text-[0.95rem]" style={{ color: TEXT }}>
+                  <dd className="mt-0.5 text-[0.95rem]" style={{ color: p.text }}>
                     {v}
                   </dd>
                 </div>
@@ -837,6 +856,7 @@ function Specs() {
 }
 
 function Pinout() {
+  const p = useV2Palette();
   const pins: [number, string, string][] = [
     [1, "24V", "Supply, isolated"],
     [2, "GND", "Power return"],
@@ -864,8 +884,8 @@ function Pinout() {
             style={{ animation: "rg-fade-in 900ms ease-out 200ms both" }}
           >
             <svg viewBox="-100 -100 200 200" className="w-64 h-64">
-              <circle r="90" fill="none" stroke={GRID} strokeWidth="1" />
-              <circle r="60" fill={PANEL} stroke={BRAND} strokeWidth="1.5" />
+              <circle r="90" fill="none" stroke={p.grid} strokeWidth="1" />
+              <circle r="60" fill={p.panel} stroke={p.brand} strokeWidth="1.5" />
               {[...Array(8)].map((_, i) => {
                 const angle = (i / 8) * Math.PI * 2 - Math.PI / 2;
                 const cx = Math.cos(angle) * 40;
@@ -874,13 +894,13 @@ function Pinout() {
                 const ly = Math.sin(angle) * 78;
                 return (
                   <g key={i}>
-                    <circle cx={cx} cy={cy} r="7" fill={BG} stroke={BRAND} />
+                    <circle cx={cx} cy={cy} r="7" fill={p.bg} stroke={p.brand} />
                     <text
                       x={lx}
                       y={ly + 4}
                       fontSize="11"
                       fontFamily="IBM Plex Mono, monospace"
-                      fill={TEXT}
+                      fill={p.text}
                       textAnchor="middle"
                     >
                       {i + 1}
@@ -888,7 +908,7 @@ function Pinout() {
                   </g>
                 );
               })}
-              <circle r="3" fill={BRAND} />
+              <circle r="3" fill={p.brand} />
             </svg>
           </div>
         </div>
@@ -901,15 +921,15 @@ function Pinout() {
             <thead>
               <tr
                 className="text-[10px] tracking-[0.22em] uppercase"
-                style={{ color: MUTED }}
+                style={{ color: p.muted }}
               >
-                <th className="border-b py-3 text-left font-normal" style={{ borderColor: GRID }}>
+                <th className="border-b py-3 text-left font-normal" style={{ borderColor: p.grid }}>
                   pin
                 </th>
-                <th className="border-b py-3 text-left font-normal" style={{ borderColor: GRID }}>
+                <th className="border-b py-3 text-left font-normal" style={{ borderColor: p.grid }}>
                   signal
                 </th>
-                <th className="border-b py-3 text-left font-normal" style={{ borderColor: GRID }}>
+                <th className="border-b py-3 text-left font-normal" style={{ borderColor: p.grid }}>
                   function
                 </th>
               </tr>
@@ -919,19 +939,19 @@ function Pinout() {
                 <tr key={n}>
                   <td
                     className="border-b py-3 text-[0.95rem]"
-                    style={{ borderColor: GRID, color: BRAND }}
+                    style={{ borderColor: p.grid, color: p.brand }}
                   >
                     0{n}
                   </td>
                   <td
                     className="border-b py-3 text-[0.95rem]"
-                    style={{ borderColor: GRID, color: TEXT }}
+                    style={{ borderColor: p.grid, color: p.text }}
                   >
                     {s}
                   </td>
                   <td
                     className="border-b py-3 text-[0.95rem]"
-                    style={{ borderColor: GRID, color: MUTED }}
+                    style={{ borderColor: p.grid, color: p.muted }}
                   >
                     {f}
                   </td>
@@ -946,6 +966,7 @@ function Pinout() {
 }
 
 function Deployments() {
+  const p = useV2Palette();
   const orgs = [
     "Top-10 Biologics Manufacturer · 2000 L production",
     "Federal R&D Laboratory · vaccine pilot",
@@ -970,9 +991,9 @@ function Deployments() {
           <li
             key={o}
             className="flex items-center gap-4 border-b py-4 text-[0.95rem]"
-            style={{ borderColor: GRID, color: TEXT }}
+            style={{ borderColor: p.grid, color: p.text }}
           >
-            <span style={{ color: BRAND }}>{String(i + 1).padStart(2, "0")}</span>
+            <span style={{ color: p.brand }}>{String(i + 1).padStart(2, "0")}</span>
             <span className="opacity-90">{o}</span>
           </li>
         ))}
@@ -982,19 +1003,20 @@ function Deployments() {
 }
 
 function CTA() {
+  const p = useV2Palette();
   return (
     <section className="relative z-10 mx-auto max-w-[88rem] px-6 py-20 md:px-10 md:py-32">
       <div
         className="border p-8 md:p-16"
         style={{
-          borderColor: BRAND,
+          borderColor: p.brand,
           background:
-            `radial-gradient(circle at 20% 0%, rgba(61,164,120,0.18) 0%, transparent 60%), ${PANEL}`,
+            `radial-gradient(circle at 20% 0%, ${p.brandSoft} 0%, transparent 60%), ${p.panel}`,
         }}
       >
         <p
           className="text-[11px] tracking-[0.32em] uppercase"
-          style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+          style={{ color: p.brand, fontFamily: "var(--font-mono)" }}
         >
           // request
         </p>
@@ -1010,7 +1032,7 @@ function CTA() {
         </h2>
         <p
           className="mt-5 max-w-xl text-[1.05rem] opacity-80"
-          style={{ color: TEXT }}
+          style={{ color: p.text }}
         >
           We ship a calibrated unit, install it with you, and run it alongside
           your current method for four weeks. You keep the data.
@@ -1022,8 +1044,8 @@ function CTA() {
             className="inline-flex items-center gap-3 px-6 py-3 text-[11px] tracking-[0.22em] uppercase transition-colors"
             style={{
               fontFamily: "var(--font-mono)",
-              background: BRAND,
-              color: BG,
+              background: p.brand,
+              color: p.bg,
             }}
           >
             Request unit
@@ -1034,8 +1056,8 @@ function CTA() {
             className="inline-flex items-center gap-3 px-6 py-3 text-[11px] tracking-[0.22em] uppercase"
             style={{
               fontFamily: "var(--font-mono)",
-              border: `1px solid ${GRID}`,
-              color: TEXT,
+              border: `1px solid ${p.grid}`,
+              color: p.text,
             }}
           >
             Download datasheet (PDF)
@@ -1046,46 +1068,55 @@ function CTA() {
       <div
         className="mt-6 border p-6 md:p-8"
         style={{
-          borderColor: GRID,
-          background: `linear-gradient(180deg, ${PANEL} 0%, #0a0d11 100%)`,
+          borderColor: p.grid,
+          background: `linear-gradient(180deg, ${p.panel} 0%, ${p.deepBg} 100%)`,
         }}
       >
         <p
           className="text-[11px] tracking-[0.32em] uppercase"
-          style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+          style={{ color: p.brand, fontFamily: "var(--font-mono)" }}
         >
           // community
         </p>
-        <TrackedLink
-          href="http://forum.reacgen.local/"
-          ctaId="forum-v2-cta"
-          location="cta-panel"
-          className="group mt-5 flex items-center justify-between gap-4 border px-5 py-4 transition-colors hover:bg-[#0A1410]"
-          style={{
-            borderColor: BRAND,
-            fontFamily: "var(--font-mono)",
-          }}
-        >
-          <span className="text-[0.95rem] md:text-[1rem]" style={{ color: BRAND }}>
-            <span style={{ color: HOT }}>$</span>{" "}
-            <span style={{ color: TEXT }}>ssh</span> forum.reacgen.local{" "}
-            <span style={{ color: MUTED }}>--join --as=engineer</span>
-          </span>
-          <span
-            className="text-[1.1rem] transition-transform group-hover:translate-x-1"
-            style={{ color: HOT }}
-          >
-            ↵
-          </span>
-        </TrackedLink>
+        <ForumLink p={p} />
         <p
           className="mt-3 text-[10.5px] tracking-[0.16em] uppercase"
-          style={{ color: MUTED, fontFamily: "var(--font-mono)" }}
+          style={{ color: p.muted, fontFamily: "var(--font-mono)" }}
         >
           FAQs · manuals · release notes · open thread
         </p>
       </div>
     </section>
+  );
+}
+
+function ForumLink({ p }: { p: V2Palette }) {
+  return (
+    <TrackedLink
+      href="http://forum.reacgen.local/"
+      ctaId="forum-v2-cta"
+      location="cta-panel"
+      className="group mt-5 flex items-center justify-between gap-4 border px-5 py-4 transition-colors hover:bg-[var(--v2-hover-bg)]"
+      style={
+        {
+          borderColor: p.brand,
+          fontFamily: "var(--font-mono)",
+          "--v2-hover-bg": p.forestBg,
+        } as React.CSSProperties
+      }
+    >
+      <span className="text-[0.95rem] md:text-[1rem]" style={{ color: p.brand }}>
+        <span style={{ color: p.hot }}>$</span>{" "}
+        <span style={{ color: p.text }}>ssh</span> forum.reacgen.local{" "}
+        <span style={{ color: p.muted }}>--join --as=engineer</span>
+      </span>
+      <span
+        className="text-[1.1rem] transition-transform group-hover:translate-x-1"
+        style={{ color: p.hot }}
+      >
+        ↵
+      </span>
+    </TrackedLink>
   );
 }
 
@@ -1100,11 +1131,12 @@ function SectionHead({
   desc?: string;
   compact?: boolean;
 }) {
+  const p = useV2Palette();
   return (
     <div>
       <p
         className="text-[10.5px] tracking-[0.32em] uppercase"
-        style={{ color: BRAND, fontFamily: "var(--font-mono)" }}
+        style={{ color: p.brand, fontFamily: "var(--font-mono)" }}
       >
         {kicker}
       </p>
@@ -1123,7 +1155,7 @@ function SectionHead({
       {desc && (
         <p
           className="mt-5 max-w-2xl text-[1rem] leading-[1.55]"
-          style={{ color: "rgba(212,221,224,0.7)" }}
+          style={{ color: p.textHair }}
         >
           {desc}
         </p>
@@ -1133,10 +1165,11 @@ function SectionHead({
 }
 
 function Footer() {
+  const p = useV2Palette();
   return (
     <footer
       className="relative z-10 mx-auto flex max-w-[88rem] flex-col gap-3 border-t px-6 pb-10 pt-8 text-[10.5px] tracking-[0.22em] uppercase md:flex-row md:items-center md:justify-between md:px-10"
-      style={{ borderColor: GRID, color: MUTED, fontFamily: "var(--font-mono)" }}
+      style={{ borderColor: p.grid, color: p.muted, fontFamily: "var(--font-mono)" }}
     >
       <span>© 2026 Reacgen Biosystems · ODX-1</span>
       <span>probe@reacgen.bio · +1 (415) 555-0190</span>

@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Fraunces, Newsreader, Fragment_Mono } from "next/font/google";
 import { TrackedLink } from "@/components/TrackedLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useV1Palette, type V1Palette } from "@/lib/theme";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -25,41 +27,31 @@ const mono = Fragment_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Reacgen ODX-1 — In-situ Optical Density",
-  description:
-    "An in-situ optical density sensor for bioprocess monitoring. Volume I, Issue 01.",
-};
-
-const PAPER = "#F3EDE0";
-const INK = "#1A1814";
-const GREEN = "#2E7D5B";
-
 export default function V1Page() {
+  const p = useV1Palette();
   return (
     <div
       className={`${display.variable} ${body.variable} ${mono.variable} min-h-screen`}
       style={{
-        background: PAPER,
-        color: INK,
+        background: p.bg,
+        color: p.ink,
         fontFamily: "var(--font-body)",
       }}
     >
-      {/* Subtle paper grain */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.07] mix-blend-multiply"
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.07]"
         style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, #1A1814 1px, transparent 0)",
+          backgroundImage: `radial-gradient(circle at 1px 1px, ${p.grainColor} 1px, transparent 0)`,
           backgroundSize: "3px 3px",
+          mixBlendMode: p.grainBlend,
         }}
       />
 
       <div className="relative z-10">
         <Masthead />
         <Cover />
-        <hr className="mx-6 md:mx-16 border-0 border-t" style={{ borderColor: "rgba(26,24,20,0.25)" }} />
+        <hr className="mx-6 md:mx-16 border-0 border-t" style={{ borderColor: p.inkHair }} />
         <Lead />
         <Figure />
         <Specifications />
@@ -76,6 +68,7 @@ export default function V1Page() {
 }
 
 function Masthead() {
+  const p = useV1Palette();
   return (
     <header
       className="mx-auto flex max-w-[78rem] items-end justify-between px-6 pt-8 pb-4 md:px-16"
@@ -108,18 +101,18 @@ function Masthead() {
           className="inline-flex items-baseline gap-1.5 transition-opacity hover:opacity-60"
         >
           Letters
-          <span aria-hidden style={{ color: GREEN }}>→</span>
+          <span aria-hidden style={{ color: p.green }}>→</span>
         </TrackedLink>
         <Link
           href="/v1/account"
           className="inline-flex items-baseline gap-1.5 transition-opacity hover:opacity-60"
         >
           Account
-          <span aria-hidden style={{ color: GREEN }}>§</span>
+          <span aria-hidden style={{ color: p.green }}>§</span>
         </Link>
         <ThemeToggle
           className="inline-flex items-center transition-opacity hover:opacity-60"
-          style={{ color: GREEN }}
+          style={{ color: p.green }}
           size={13}
         />
       </div>
@@ -128,12 +121,13 @@ function Masthead() {
 }
 
 function Cover() {
+  const p = useV1Palette();
   return (
     <section className="mx-auto max-w-[78rem] px-6 pt-10 pb-20 md:px-16 md:pt-20 md:pb-32">
       <p
         className="text-[11px] tracking-[0.32em] uppercase mb-8"
         style={{
-          color: GREEN,
+          color: p.green,
           fontFamily: "var(--font-mono)",
           animation: "rg-fade-up 700ms ease-out 100ms both",
         }}
@@ -152,7 +146,7 @@ function Cover() {
       >
         Reading
         <br />
-        the <em style={{ fontStyle: "italic", color: GREEN }}>invisible.</em>
+        the <em style={{ fontStyle: "italic", color: p.green }}>invisible.</em>
       </h1>
 
       <p
@@ -179,17 +173,17 @@ function Cover() {
           className="inline-flex items-center gap-3 px-6 py-3 text-[11px] tracking-[0.24em] uppercase transition-opacity hover:opacity-80"
           style={{
             fontFamily: "var(--font-mono)",
-            background: INK,
-            color: PAPER,
+            background: p.ink,
+            color: p.bg,
           }}
         >
           Request an evaluation
-          <span aria-hidden style={{ color: GREEN }}>→</span>
+          <span aria-hidden style={{ color: p.green }}>→</span>
         </TrackedLink>
         <a
           href="#fig-1"
           className="text-[11px] tracking-[0.22em] uppercase transition-opacity hover:opacity-60"
-          style={{ fontFamily: "var(--font-mono)", color: INK }}
+          style={{ fontFamily: "var(--font-mono)", color: p.ink }}
         >
           Read the field report
         </a>
@@ -220,13 +214,14 @@ function Cover() {
 }
 
 function Lead() {
+  const p = useV1Palette();
   return (
     <section className="mx-auto max-w-[78rem] px-6 pt-20 pb-12 md:px-16">
       <div className="grid grid-cols-12 gap-x-10 gap-y-10">
         <div className="col-span-12 md:col-span-3">
           <p
             className="text-[10px] tracking-[0.28em] uppercase"
-            style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+            style={{ color: p.green, fontFamily: "var(--font-mono)" }}
           >
             § 01
           </p>
@@ -260,7 +255,7 @@ function Lead() {
                 fontFamily: "var(--font-display)",
                 fontVariationSettings: '"opsz" 144',
                 fontSize: "5.5rem",
-                color: GREEN,
+                color: p.green,
               }}
             >
               O
@@ -282,7 +277,7 @@ function Lead() {
             on the same optical axis. The second wavelength corrects for
             scattering from gas bubbles and microcarriers — a long-standing
             failure mode of in-line probes that has, until now, required the
-            operator to ignore aerated phases of the run.<sup style={{ color: GREEN }}>1</sup>
+            operator to ignore aerated phases of the run.<sup style={{ color: p.green }}>1</sup>
           </p>
         </div>
       </div>
@@ -291,6 +286,7 @@ function Lead() {
 }
 
 function Figure() {
+  const p = useV1Palette();
   return (
     <section id="fig-1" className="mx-auto max-w-[78rem] px-6 py-16 md:px-16 md:py-24">
       <div className="grid grid-cols-12 gap-x-10 gap-y-6">
@@ -298,9 +294,8 @@ function Figure() {
           <div
             className="relative aspect-[16/10] overflow-hidden border"
             style={{
-              borderColor: "rgba(26,24,20,0.18)",
-              background:
-                "radial-gradient(ellipse at center, #1A1814 0%, #0a0908 100%)",
+              borderColor: p.inkHair,
+              background: `radial-gradient(ellipse at center, ${p.inverseBg} 0%, #000 100%)`,
             }}
           >
             <Image
@@ -314,15 +309,14 @@ function Figure() {
               aria-hidden
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage:
-                  "linear-gradient(rgba(243,237,224,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(243,237,224,0.04) 1px, transparent 1px)",
+                backgroundImage: `linear-gradient(${p.inverseBgWash} 1px, transparent 1px), linear-gradient(90deg, ${p.inverseBgWash} 1px, transparent 1px)`,
                 backgroundSize: "24px 24px",
               }}
             />
             <span
               className="absolute left-4 top-3 text-[10px] tracking-[0.22em] uppercase"
               style={{
-                color: "rgba(243,237,224,0.6)",
+                color: p.inverseInkSoft,
                 fontFamily: "var(--font-mono)",
               }}
             >
@@ -331,7 +325,7 @@ function Figure() {
             <span
               className="absolute right-4 bottom-3 text-[10px] tracking-[0.22em] uppercase"
               style={{
-                color: "rgba(243,237,224,0.6)",
+                color: p.inverseInkSoft,
                 fontFamily: "var(--font-mono)",
               }}
             >
@@ -345,7 +339,7 @@ function Figure() {
             <span
               className="mr-2"
               style={{
-                color: GREEN,
+                color: p.green,
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.8rem",
                 letterSpacing: "0.16em",
@@ -366,6 +360,7 @@ function Figure() {
 }
 
 function Specifications() {
+  const p = useV1Palette();
   const rows: [string, string][] = [
     ["Measurement range", "0.001 – 200 OD"],
     ["Accuracy", "± 0.5% of reading"],
@@ -393,7 +388,7 @@ function Specifications() {
         <div className="col-span-12 md:col-span-3">
           <p
             className="text-[10px] tracking-[0.28em] uppercase"
-            style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+            style={{ color: p.green, fontFamily: "var(--font-mono)" }}
           >
             § 02 · Appendix A
           </p>
@@ -419,15 +414,15 @@ function Specifications() {
             className="divide-y"
             style={{
               fontFamily: "var(--font-mono)",
-              borderTop: "1px solid rgba(26,24,20,0.25)",
-              borderBottom: "1px solid rgba(26,24,20,0.25)",
+              borderTop: `1px solid ${p.inkHair}`,
+              borderBottom: `1px solid ${p.inkHair}`,
             }}
           >
             {rows.map(([k, v]) => (
               <div
                 key={k}
                 className="flex flex-col gap-1 py-3 md:flex-row md:items-baseline md:justify-between md:gap-10"
-                style={{ borderColor: "rgba(26,24,20,0.15)" }}
+                style={{ borderColor: p.inkHairSoft }}
               >
                 <dt className="text-[11px] tracking-[0.18em] uppercase opacity-70">
                   {k}
@@ -443,13 +438,14 @@ function Specifications() {
 }
 
 function Methods() {
+  const p = useV1Palette();
   return (
     <section className="mx-auto max-w-[78rem] px-6 py-16 md:px-16 md:py-24">
       <div className="grid grid-cols-12 gap-x-10 gap-y-10">
         <div className="col-span-12 md:col-span-3">
           <p
             className="text-[10px] tracking-[0.28em] uppercase"
-            style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+            style={{ color: p.green, fontFamily: "var(--font-mono)" }}
           >
             § 03
           </p>
@@ -472,7 +468,7 @@ function Methods() {
             Calibration is performed against a NIST-traceable polystyrene
             microsphere reference series spanning seven decades of turbidity.
             Each unit is co-validated on bench instruments at Reacgen and at
-            three partner laboratories before release.<sup style={{ color: GREEN }}>2</sup>
+            three partner laboratories before release.<sup style={{ color: p.green }}>2</sup>
           </p>
           <p className="mb-5 break-inside-avoid text-[1.05rem] leading-[1.7]">
             Long-term drift is suppressed by an on-board reference path that
@@ -498,6 +494,7 @@ function Methods() {
 }
 
 function Applications() {
+  const p = useV1Palette();
   const apps: [string, string][] = [
     [
       "Mammalian cell culture",
@@ -529,7 +526,7 @@ function Applications() {
     <section className="mx-auto max-w-[78rem] px-6 py-16 md:px-16 md:py-24">
       <p
         className="text-[10px] tracking-[0.28em] uppercase"
-        style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+        style={{ color: p.green, fontFamily: "var(--font-mono)" }}
       >
         § 04
       </p>
@@ -546,14 +543,14 @@ function Applications() {
 
       <ul
         className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-3"
-        style={{ borderTop: "1px solid rgba(26,24,20,0.25)" }}
+        style={{ borderTop: `1px solid ${p.inkHair}` }}
       >
         {apps.map(([t, d], i) => (
           <li
             key={t}
             className="pt-8"
             style={{
-              borderTop: i >= 3 ? "1px solid rgba(26,24,20,0.15)" : "none",
+              borderTop: i >= 3 ? `1px solid ${p.inkHairSoft}` : "none",
             }}
           >
             <p
@@ -585,6 +582,7 @@ function Applications() {
 }
 
 function Quote() {
+  const p = useV1Palette();
   return (
     <section className="mx-auto max-w-[78rem] px-6 py-20 md:px-16 md:py-32">
       <figure className="mx-auto max-w-4xl text-center">
@@ -606,7 +604,7 @@ function Quote() {
         >
           Senior Engineer, Top-10 Biologics Manufacturer
           <br />
-          <span style={{ color: GREEN }}>—</span> identity withheld
+          <span style={{ color: p.green }}>—</span> identity withheld
         </figcaption>
       </figure>
     </section>
@@ -614,16 +612,17 @@ function Quote() {
 }
 
 function Letters() {
+  const p = useV1Palette();
   return (
     <section className="mx-auto max-w-[78rem] px-6 pb-12 md:px-16">
       <div
         className="grid grid-cols-12 items-center gap-x-10 gap-y-6 border-y py-10 md:py-12"
-        style={{ borderColor: "rgba(26,24,20,0.4)" }}
+        style={{ borderColor: p.inkMuted }}
       >
         <div className="col-span-12 md:col-span-3">
           <p
             className="text-[10px] tracking-[0.32em] uppercase"
-            style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+            style={{ color: p.green, fontFamily: "var(--font-mono)" }}
           >
             Letters page
           </p>
@@ -641,27 +640,38 @@ function Letters() {
           </p>
         </div>
         <div className="col-span-12 md:col-span-3 md:justify-self-end">
-          <TrackedLink
-            href="http://forum.reacgen.local/"
-            ctaId="forum-v1-letters"
-            location="letters-section"
-            className="inline-flex items-center gap-3 border px-5 py-3 text-[11px] tracking-[0.24em] uppercase transition-colors hover:bg-[#1A1814] hover:text-[#F3EDE0]"
-            style={{
-              fontFamily: "var(--font-mono)",
-              borderColor: "#1A1814",
-              color: "#1A1814",
-            }}
-          >
-            Visit forum
-            <span aria-hidden style={{ color: GREEN }}>→</span>
-          </TrackedLink>
+          <ForumLink p={p} />
         </div>
       </div>
     </section>
   );
 }
 
+function ForumLink({ p }: { p: V1Palette }) {
+  return (
+    <TrackedLink
+      href="http://forum.reacgen.local/"
+      ctaId="forum-v1-letters"
+      location="letters-section"
+      className="inline-flex items-center gap-3 border px-5 py-3 text-[11px] tracking-[0.24em] uppercase transition-colors hover:bg-[var(--v1-hover-bg)] hover:text-[var(--v1-hover-fg)]"
+      style={
+        {
+          fontFamily: "var(--font-mono)",
+          borderColor: p.ink,
+          color: p.ink,
+          "--v1-hover-bg": p.ink,
+          "--v1-hover-fg": p.bg,
+        } as React.CSSProperties
+      }
+    >
+      Visit forum
+      <span aria-hidden style={{ color: p.green }}>→</span>
+    </TrackedLink>
+  );
+}
+
 function References() {
+  const p = useV1Palette();
   const refs = [
     "Park, Y., Hsu, R., et al. Dual-wavelength compensation of bubble scattering in stirred-tank turbidity probes. Nature Biotechnology 42, 1183–1191 (2024).",
     "Chen, L. & Adeyemi, M. NIST-traceable polystyrene reference series for in-situ optical density. Biotechnol. Bioeng. 122, 4 (2025).",
@@ -670,11 +680,11 @@ function References() {
   return (
     <section
       className="mx-auto max-w-[78rem] px-6 py-12 md:px-16 md:py-16"
-      style={{ borderTop: "1px solid rgba(26,24,20,0.25)" }}
+      style={{ borderTop: `1px solid ${p.inkHair}` }}
     >
       <p
         className="text-[10px] tracking-[0.28em] uppercase mb-6"
-        style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+        style={{ color: p.green, fontFamily: "var(--font-mono)" }}
       >
         References
       </p>
@@ -689,7 +699,7 @@ function References() {
           >
             <sup
               className="mr-1"
-              style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+              style={{ color: p.green, fontFamily: "var(--font-mono)" }}
             >
               {i + 1}
             </sup>
@@ -702,16 +712,17 @@ function References() {
 }
 
 function Correspondence() {
+  const p = useV1Palette();
   return (
     <section className="mx-auto max-w-[78rem] px-6 py-20 md:px-16 md:py-32">
       <div
         className="grid grid-cols-12 gap-x-10 gap-y-10 border-t border-b py-16"
-        style={{ borderColor: "rgba(26,24,20,0.4)" }}
+        style={{ borderColor: p.inkMuted }}
       >
         <div className="col-span-12 md:col-span-7">
           <p
             className="text-[10px] tracking-[0.28em] uppercase"
-            style={{ color: GREEN, fontFamily: "var(--font-mono)" }}
+            style={{ color: p.green, fontFamily: "var(--font-mono)" }}
           >
             Correspondence
           </p>
@@ -761,15 +772,15 @@ function Correspondence() {
 
           <Link
             href="/v1/whitelist"
-            className="mt-10 inline-flex items-center gap-3 px-5 py-3 text-[11px] tracking-[0.24em] uppercase transition-colors hover:opacity-80"
+            className="mt-10 inline-flex items-center gap-3 px-5 py-3 text-[11px] tracking-[0.24em] uppercase transition-opacity hover:opacity-80"
             style={{
               fontFamily: "var(--font-mono)",
-              background: INK,
-              color: PAPER,
+              background: p.ink,
+              color: p.bg,
             }}
           >
             Request an evaluation
-            <span aria-hidden style={{ color: GREEN }}>
+            <span aria-hidden style={{ color: p.green }}>
               →
             </span>
           </Link>
