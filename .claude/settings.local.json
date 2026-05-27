@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"require\\('@tailwindcss/oxide-linux-x64-gnu'\\)\" --require /dev/null)",
+      "Bash(node -e \"const Module = require\\('module'\\); console.log\\(Module._resolveFilename\\('@tailwindcss/oxide-linux-x64-gnu', null, false, {paths: ['/mnt/c/Users/Thomas/Documents/Projects/PhotoBioReactor/reacgen/node_modules/.pnpm/@tailwindcss+oxide@4.3.0/node_modules/@tailwindcss/oxide']}\\)\\)\")",
+      "Bash(node -e \"require\\('./node_modules/.pnpm/@tailwindcss+oxide@4.3.0/node_modules/@tailwindcss/oxide/index.js'\\)\")",
+      "Bash(pnpm --version)",
+      "Bash(node *)",
+      "WebSearch",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(npm run *)"
+    ]
+  }
+}
